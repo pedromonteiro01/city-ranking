@@ -1,0 +1,12 @@
+.check-box-group {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.check-box-group checkbox {
+    font-size: 14px;
+}
+
+.check-box-group-button {
+    margin: 0 auto;
+}

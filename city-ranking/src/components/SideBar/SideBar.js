@@ -1,3 +1,4 @@
+import CheckBoxGroup from '../CheckBoxGroup/CheckBoxGroup';
 import FiltersBox from '../FiltersBox/FiltersBox';
 import Input from '../Input/Input';
 import logo from './logo-without-bg.png';
@@ -12,6 +13,7 @@ const SideBar = () => {
             <div className='side-bar-items'>
                 <FiltersBox />
                 <Input />
+                <CheckBoxGroup />
             </div>
         </div>
     )

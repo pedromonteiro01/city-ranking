@@ -11,7 +11,7 @@ const NextInput = () => {
                 labelPlaceholder="City"
                 initialValue=""
             />
-            <Spacer y={1.5} />
+            <Spacer y={2.5} />
         </div>
     )
 }
