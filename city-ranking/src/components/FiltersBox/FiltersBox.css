@@ -1,9 +1,8 @@
 .filters-box {
     background-color: #fff;
-    width: 85%;
-    max-width: 85%;
     margin: 0 auto;
     margin-top: 1.2rem;
+    z-index: 3
 }
 
 .side-bar-dropdown {
@@ -11,7 +10,7 @@
     border-radius: 10px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     white-space: pre;
-    min-width: 50%;
-    max-width: 100%;
+    width: 100%;
     height: auto;
+    z-index: 3;
 }
