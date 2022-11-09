@@ -1,5 +1,6 @@
 import './App.css';
 import SideBar from './components/SideBar/SideBar';
+import BarChart from './components/BarChart/BarChart';
 
 function App() {
   return (
@@ -7,8 +8,8 @@ function App() {
       <div className='side-bar-wrapper'>
         <SideBar />
       </div>
-      <div className='content' style={{marginLeft: '1rem'}}>
-        <p>content</p>
+      <div className='content'>
+      <BarChart />
       </div>
     </div>
   );

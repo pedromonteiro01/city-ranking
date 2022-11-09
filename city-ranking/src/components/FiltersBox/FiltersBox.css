@@ -1,16 +1,13 @@
 .filters-box {
     width: 85%;
-    height: 10rem;
+    max-width: 85%;
     margin: 0 auto;
     margin-top: 1.2rem;
-    border-radius: 10px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.filters-box-label {
-    position: absolute;
-    margin-top: -10px;
-    margin-left: 0.8rem;
-    background-color: #fff;
-    padding: 0 0.7rem;
+.side-bar-dropdown {
+    white-space: pre;
+    min-width: 50%;
+    max-width: 100%;
+    height: auto;
 }
