@@ -14,7 +14,7 @@ const FiltersBox = () => {
     return (
         <Container className='filters-box'>
             <Dropdown className="side-bar-dropdown">
-                <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }} className="side-bar-dropdown">
+                <Dropdown.Button flat color="default" css={{ tt: "capitalize" }} className="side-bar-dropdown">
                     {selectedValue}
                 </Dropdown.Button>
                 <Dropdown.Menu
