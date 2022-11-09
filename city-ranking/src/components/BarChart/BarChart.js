@@ -10,6 +10,11 @@ const sample = [
     { category: 'Paris', quantity: 124 },
     { category: 'Los Angeles', quantity: 12 },
     { category: 'Vaticano', quantity: 33 },
+    { category: 'Berlin', quantity: 139 },
+    { category: 'Porto', quantity: 57 },
+    { category: 'Barcelona', quantity: 80 },
+    { category: 'Malaga', quantity: 106 },
+    { category: 'Sao Paulo', quantity: 73 },
 ]
 
 const BarChart = () => {
