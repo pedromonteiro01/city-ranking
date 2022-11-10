@@ -1,4 +1,4 @@
-import { Dropdown, Container } from "@nextui-org/react";
+import { Container } from "@nextui-org/react";
 import React from "react";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';

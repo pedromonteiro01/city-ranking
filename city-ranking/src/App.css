@@ -17,6 +17,7 @@
 }
 
 .content {
+  height: 100vh;
   width: 85%;
   padding: 5rem 8rem;
 }

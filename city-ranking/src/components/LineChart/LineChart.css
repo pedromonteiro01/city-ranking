@@ -1,0 +1,13 @@
+.line-chart-header {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-right: 20%;
+}
+
+.line-chart-header h3 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
