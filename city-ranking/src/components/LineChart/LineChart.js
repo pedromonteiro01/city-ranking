@@ -1,4 +1,5 @@
 import { Dropdown } from "@nextui-org/react";
+import * as d3 from 'd3';
 import './LineChart.css';
 
 const LineChart = () => {
