@@ -1,10 +1,14 @@
 .side-bar {
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 15%;
     height: 100%;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
 .logo-wrapper {
+    margin-top: 1rem;
     height: 15%;
     width: 100%;
 }
