@@ -18,7 +18,7 @@ const SideBar = () => {
                         <ChartOption image="charts/line-chart.png" desc="Line" />
                         <ChartOption image="charts/bar-chart.png" desc="Bar" />
                     </div>
-                    <div className='side-bar-items-bar-selection-elements'>
+                    <div className='side-bar-items-bar-selection-elements' style={{marginBottom: '1.5rem'}}>
                         <ChartOption image="charts/radar-chart.png" desc="Radar" />
                         <ChartOption image="charts/mundo.png" desc="Map" />
                     </div>

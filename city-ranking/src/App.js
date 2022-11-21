@@ -10,8 +10,7 @@ function App() {
         <SideBar />
       </div>
       <div className='content'>
-      <BarChart />
-      <LineChart />
+        <BarChart />
       </div>
     </div>
   );
