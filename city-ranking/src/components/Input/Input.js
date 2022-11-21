@@ -4,7 +4,7 @@ import './Input.css';
 const NextInput = () => {
     return (
         <div className="input-wrapper">
-            <Spacer y={1} />
+            <Spacer y={1.5} />
             <Input
                 clearable
                 underlined
