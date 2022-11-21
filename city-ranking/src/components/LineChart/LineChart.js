@@ -55,7 +55,7 @@ const LineChart = () => {
         { key: "pollution", name: "Pollution" },
     ];
     return (
-        <div className='line-chart'>
+        <div className='line-chart animate__animated animate__fadeInDown'>
             <div className='line-chart-header'>
                 <h3>Products Price by City</h3>
                 <Dropdown>

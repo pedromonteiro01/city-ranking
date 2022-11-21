@@ -1,6 +1,7 @@
 import { Dropdown } from "@nextui-org/react";
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import 'animate.css';
 import './BarChart.css';
 
 const sample = [
@@ -101,7 +102,7 @@ const BarChart = () => {
     }
 
     return (
-        <div className='bar-chart'>
+        <div className='bar-chart animate__animated animate__fadeInDown'>
             <div className='bar-chart-header'>
                 <h3>Stats by City</h3>
                 <Dropdown>
