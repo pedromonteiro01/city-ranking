@@ -11,3 +11,13 @@
     font-weight: 600;
     font-size: 1.5rem;
 }
+
+.line-chart-item {
+    width: 89.5%;
+    height: 40vh;
+    margin: 0 auto;
+}
+
+#linechart {
+    height: 100%;
+}
