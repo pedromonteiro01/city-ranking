@@ -6,6 +6,14 @@
     border-radius: 6px;
 }
 
+.chart-option-active {
+    width: 3rem;
+    height: 3rem;
+    background-color: #ccc;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
 .chart-option-wrapper {
     text-align: center;
 }
@@ -20,7 +28,7 @@
     background-color: #ccc;
 }
 
-.chart-option img {
+.chart-option img, .chart-option-active img {
     width: 100%;
     height: 100%;
     object-fit: cover;
