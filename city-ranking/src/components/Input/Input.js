@@ -4,14 +4,14 @@ import './Input.css';
 const NextInput = () => {
     return (
         <div className="input-wrapper">
-            <Spacer y={2.5} />
+            <Spacer y={1} />
             <Input
                 clearable
                 underlined
                 labelPlaceholder="City"
                 initialValue=""
             />
-            <Spacer y={2.5} />
+            <Spacer y={1.5} />
         </div>
     )
 }

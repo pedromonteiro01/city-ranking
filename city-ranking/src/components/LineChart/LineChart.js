@@ -12,6 +12,7 @@ const LineChart = () => {
         const margin = { top: 50, right: 30, bottom: 30, left: 60 }
         const w = parseInt(d3.select('#linechart').style('width')) - margin.left - margin.right
         const h = parseInt(d3.select('#linechart').style('height')) - margin.top - margin.bottom
+        
         const svg = d3.select(svgRef.current)
             .attr('width', w)
             .attr('height', h)
@@ -54,7 +55,7 @@ const LineChart = () => {
         { key: "pollution", name: "Pollution" },
     ];
     return (
-        <div className='line-chart'>
+        <div className='line-chart animate__animated animate__fadeInDown'>
             <div className='line-chart-header'>
                 <h3>Products Price by City</h3>
                 <Dropdown>
