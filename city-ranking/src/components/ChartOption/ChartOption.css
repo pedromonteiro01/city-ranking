@@ -1,0 +1,28 @@
+.chart-option {
+    width: 3rem;
+    height: 3rem;
+    background-color: rgb(249, 241, 241);
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.chart-option-wrapper {
+    text-align: center;
+}
+
+.chart-option-wrapper p {
+    font-size: 15px;
+    margin-top: 0.2rem;
+}
+
+.chart-option:hover {
+    cursor: pointer;
+    background-color: #ccc;
+}
+
+.chart-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.2s;
+}

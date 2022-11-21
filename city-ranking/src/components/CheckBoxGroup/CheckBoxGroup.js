@@ -5,6 +5,7 @@ import './CheckBoxGroup.css';
 const CheckBoxGroup = () => {
 
     const [showItems, setShowItems] = useState(false);
+    const [checkboxClass, setCheckboxClass] = useState("animate__animated animate__slideInDown")
 
     const handleShowMoreItems = () => {
         setShowItems(!showItems);
@@ -23,7 +24,7 @@ const CheckBoxGroup = () => {
                 <Checkbox value="tokyo">Tokyo</Checkbox>
                 {
                     showItems &&
-                    <>
+                    <div className={checkboxClass} style={{marginTop: '1.2rem'}}>
                         <Checkbox value="sydney">Sydney</Checkbox>
                         <Checkbox value="london">London</Checkbox>
                         <Checkbox value="tokyo">Tokyo</Checkbox>
@@ -39,7 +40,7 @@ const CheckBoxGroup = () => {
                         <Checkbox value="sydney">Sydney</Checkbox>
                         <Checkbox value="london">London</Checkbox>
                         <Checkbox value="tokyo">Tokyo</Checkbox>
-                    </>
+                    </div>
                 }
             </Checkbox.Group>
             <Spacer y={1} />
