@@ -3,8 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import 'animate.css';
 import './BarChart.css';
+import { zoom } from "d3";
 
-const BarChart = () => {
+const BarChart = (props) => {
     const menuItems = [
         { key: "healthCare", name: "Health Care" },
         { key: "criminal", name: "Criminal Rate" },
@@ -33,6 +34,7 @@ const BarChart = () => {
         height: window.innerHeight
     })
 
+    const [data, setData] = useState(props.data);
     const [loading, setLoading] = useState(true);
     const [dropValue, setDropValue] = useState('Health Care');
 
@@ -55,19 +57,19 @@ const BarChart = () => {
         }, [])
 
         // Draw chart using the data and updated dimensions
-        LoadChart(sample, dimensions);
+        LoadChart();
 
     }, [dimensions])
 
     useEffect(()=>{
         if (loading || !chartConfig.current) return;
-        DrawChart(sample);
+        DrawChart(data);
 
     }, [loading, dropValue])
 
     const margin = { top: 50, right: 30, bottom: 30, left: 60 }
 
-    const LoadChart = (data, dimensions) => {
+    const LoadChart = () => {
         const chartwidth = parseInt(d3.select('#d3demo').style('width')) - margin.left - margin.right
         const chartheight = parseInt(d3.select('#d3demo').style('height')) - margin.top - margin.bottom
 
@@ -107,11 +109,11 @@ const BarChart = () => {
         const x = d3.scaleBand()
             .range([0, chartwidth - margin.right])
             .padding(0.1)
-        const xAxis = svg.append("g").attr("transform", `translate(0,${chartheight})`);
+        const y = d3.scaleLinear().range([chartheight, margin.top]);
 
         // Initialize the Y axis
-        const y = d3.scaleLinear().range([chartheight, margin.top]);
         const yAxis = svg.append("g");
+        const xAxis = svg.append("g").attr("transform", `translate(0,${chartheight})`);
 
         chartConfig.current = { svg, x, xAxis, y, yAxis};
         setLoading(false);  
@@ -124,17 +126,17 @@ const BarChart = () => {
         switch(dropValue) {
             case "Health Care":
                 for (let i in data){
-                    values.push({category: sample[i].category, value: sample[i].healthCare})
+                    values.push({city: data[i].city, value: data[i].healthCare})
                 }
                 break;
             case "Pollution":
                 for (let i in data){
-                    values.push({category: sample[i].category, value: sample[i].pollution})
+                    values.push({city: data[i].city, value: data[i].pollution})
                 }
                 break;
             default:
                 for (let i in data){
-                    values.push({category: sample[i].category, value: sample[i].healthCare})
+                    values.push({city: data[i].city, value: data[i].healthCare})
                 }
         }
 
@@ -143,8 +145,8 @@ const BarChart = () => {
         const { svg, x, xAxis, y, yAxis} = chartConfig.current;
 
         // Update the X axis
-        x.domain(d3.range(values.length));
-        xAxis.call(d3.axisBottom(x).tickFormat(i => values[i].category).tickSizeOuter(0));
+        x.domain(d3.range(20));
+        xAxis.call(d3.axisBottom(x).tickFormat(i => values[i].city).tickSizeOuter(0));
 
         const max = d3.max(values, function (d) { return d.value })
 
@@ -184,6 +186,8 @@ const BarChart = () => {
         bar.exit().remove();
 
         var label = svg.selectAll("text.label").data(values);
+
+        label.exit().remove();
         
         label.enter().append("text").attr("class", "label");
 
@@ -194,7 +198,7 @@ const BarChart = () => {
             .attr('x', (d, i) => x(i) + x.bandwidth()/2 -10)
             .attr('y', d => y(d.value) - 10)
             .attr("font-family", "sans-serif")
-            .attr("font-size", "18px")
+            .attr("font-size", "11px")
             .attr("fill", "#000");
             
 
