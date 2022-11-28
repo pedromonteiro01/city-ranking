@@ -1,0 +1,25 @@
+.radar-chart-header {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-right: 20%;
+    margin-bottom: 1rem;
+}
+
+.radar-chart-header h3 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.radar-dropdown-items {
+    display: flex;
+    gap: 2rem;
+}
+
+.radar-chart-item {
+    height: 34rem;
+    width: 89.5%;
+    margin: 0 auto;
+}

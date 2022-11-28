@@ -61,7 +61,8 @@ function ZoomableLineChart({ data, id = "myZoomableLineChart" }) {
             .data([data])
             .join("path")
             .attr("class", "myLine")
-            .attr("stroke", "black")
+            .attr("stroke", "#ccc")
+            .attr("stroke-width", "2px")
             .attr("fill", "none")
             .attr("d", lineGenerator);
 

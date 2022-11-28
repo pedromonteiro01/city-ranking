@@ -11,6 +11,46 @@
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
+.side-bar-item-desc {
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.question-wrapper {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.question-wrapper img {
+    height: 70%;
+    width: 40%;
+    margin-left: 0.5rem;
+    object-fit: contain;
+}
+
+.question-wrapper img:hover {
+    cursor: pointer;
+}
+
+.stats-by-city-label, .products-price-label, .cities-comparison-label {
+    position: absolute;
+    background-color: #ccc;
+    z-index: 10;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 6px;
+}
+
+.products-price-label, .cities-comparison-label, .stats-by-city-label {
+    margin-top: 2rem;
+    margin-left: 1.4rem;
+}
+
+.side-bar-item-wrapper {
+    display: flex;
+}
+
 .logo-wrapper {
     height: 15%;
     width: 85%;
@@ -27,9 +67,8 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.5rem;
     width: 100%;
-    margin: 0 auto;
 }
 
 .side-bar-items-bar-selection-elements {
