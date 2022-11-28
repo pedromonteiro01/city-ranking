@@ -1,24 +1,24 @@
-.line-chart-header {
+.map-chart-header {
     display: flex;
     justify-content: space-between;
     width: 80%;
     margin-right: 20%;
 }
 
-.line-chart-header h3 {
+.map-chart-header h3 {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 600;
     font-size: 1.5rem;
 }
 
-.line-chart-item {
+.map-chart-item {
     width: 89.5%;
     margin: 0 auto;
     margin-top: 3rem;
 }
 
-#linechart {
+#mapchart {
     height: 100%;
 }
 

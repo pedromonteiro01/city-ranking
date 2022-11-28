@@ -1,10 +1,12 @@
 import './App.css';
 import SideBar from './components/SideBar/SideBar';
 import BarChart from './components/BarChart/BarChart';
-import LineChart from './components/LineChart/LineChart';
 import city_quality_csv from './dataset/movehubqualityoflife.csv';
 import Papa from "papaparse";
 import { useEffect, useState } from 'react';
+import ZoomableLineChart from './components/LineChart/LineChart';
+import RadarChart from './components/RadarChart/RadarChart';
+import MapChart from './components/MapChart/MapChart';
 
 function App() {
 
@@ -31,6 +33,11 @@ function App() {
     setActive(data);
   };
 
+  const [data, setData] = useState(
+    Array.from({ length: 50 }, () => Math.round(Math.random() * 100))
+  );
+
+  console.log(data)
   return (
     <div className="app">
       <div className='side-bar-wrapper'>
@@ -38,9 +45,10 @@ function App() {
       </div>
       <div className='content'>
         {active === "bar" && records!==null && <BarChart data={records}/>}
-        {active === "line" && records!==null && <LineChart />}
-        {active === "radar" && records!==null && <p>Radar</p>}
-        {active === "map" && records!==null && <p>Map</p>}
+        {active === "line" && records!==null && <ZoomableLineChart data={data} />}
+        {active === "radar" && records!==null && <RadarChart />}
+        {active === "map" && records!==null && <p><MapChart /></p>}
+        {active === "pie" && records!==null && <p>Pie</p>}
       </div>
     </div>
   );
