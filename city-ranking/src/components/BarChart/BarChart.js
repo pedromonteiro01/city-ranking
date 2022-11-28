@@ -99,23 +99,21 @@ const BarChart = (props) => {
         //     .call(d3.axisLeft(y))
 
         const svg = d3
-            .select(d3Chart.current)
-            .attr("width", chartwidth + margin.left + margin.right)
-            .attr("height", chartheight + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
+        .select(d3Chart.current)
+        .attr("width", chartwidth + margin.left + margin.right)
+        .attr("height", chartheight + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
       
-        // Initialize the X axis
-        const x = d3.scaleBand()
-            .range([0, chartwidth - margin.right])
-            .padding(0.1)
+        //Initialize the X axis
+        const x = d3.scaleBand().range([0, chartwidth - margin.right]).padding(0.1)
         const y = d3.scaleLinear().range([chartheight, margin.top]);
 
         // Initialize the Y axis
-        const yAxis = svg.append("g");
-        const xAxis = svg.append("g").attr("transform", `translate(0,${chartheight})`);
+        const yAxis = svg.append("g").attr('class', 'y-axis');
+        const xAxis = svg.append("g").attr('class', 'x-axis').attr("transform", `translate(0,${chartheight})`);
 
-        chartConfig.current = { svg, x, xAxis, y, yAxis};
+        chartConfig.current = { svg, x, xAxis, y, yAxis, chartheight, chartwidth};
         setLoading(false);  
     }
 
@@ -142,11 +140,11 @@ const BarChart = (props) => {
 
         // console.log(dimensions.width, dimensions.height)
 
-        const { svg, x, xAxis, y, yAxis} = chartConfig.current;
+        const { svg, x, xAxis, y, yAxis, chartheight, chartwidth} = chartConfig.current;
 
         // Update the X axis
-        x.domain(d3.range(20));
-        xAxis.call(d3.axisBottom(x).tickFormat(i => values[i].city).tickSizeOuter(0));
+        x.domain(d3.range(values.length));
+        xAxis.call(d3.axisBottom(x).tickFormat(i => values[i].city).tickSize(-chartheight));
 
         const max = d3.max(values, function (d) { return d.value })
 

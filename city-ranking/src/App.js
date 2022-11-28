@@ -12,19 +12,21 @@ function App() {
   const [records, setRecords] = useState(null);
 
   useEffect(()=>{
-    Papa.parse(city_quality_csv, {
-      download: true,
-      complete: function (input) {
-          const inpt = input.data
-          let values = [];
-          for (let i = 0; i<inpt.length; i++){
-            if (i !== 0) {
-              values.push({city: input.data[i][0], rating: input.data[i][1], purchasePower: input.data[i][2], healthCare: input.data[i][3], pollution: input.data[i][4], qualityLife: input.data[i][5], crimeRating: input.data[i][6]});
+    if (records === null) {
+      Papa.parse(city_quality_csv, {
+        download: true,
+        complete: function (input) {
+            const inpt = input.data
+            let values = [];
+            for (let i = 0; i<inpt.length; i++){
+              if (i !== 0) {
+                values.push({city: input.data[i][0], rating: input.data[i][1], purchasePower: input.data[i][2], healthCare: input.data[i][3], pollution: input.data[i][4], qualityLife: input.data[i][5], crimeRating: input.data[i][6]});
+              }
             }
-          }
-          setRecords(values);
-      }
-    });
+            setRecords(values);
+        }
+      });
+    }
   },[])
 
   const receivedData = (data) => {
