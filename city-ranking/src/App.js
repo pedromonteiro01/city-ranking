@@ -39,7 +39,6 @@ function App() {
     Array.from({ length: 50 }, () => Math.round(Math.random() * 100))
   );
 
-  console.log(data)
   return (
     <div className="app">
       <div className='side-bar-wrapper'>
