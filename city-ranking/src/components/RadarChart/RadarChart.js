@@ -20,7 +20,7 @@ const RadarChart = (props) => {
                 <h3>Cities Comparison</h3>
                 <div className="radar-dropdown-items">
                 <Dropdown>
-                    <Dropdown.Button flat>{city1!==null ? city1.city : "Trigger"}</Dropdown.Button>
+                    <Dropdown.Button flat>{city1.city}</Dropdown.Button>
                     <Dropdown.Menu aria-label="Dynamic Actions" items={data} onAction={(key) => {
                         for (let index in data) {
                             if (data[index].city === key){
@@ -33,7 +33,7 @@ const RadarChart = (props) => {
                         {(item) => (
                             <Dropdown.Item
                                 key={item.city}
-                                color={item.city === "delete" ? "error" : "default"}
+                                color="default"
                             >
                                 {item.city}
                             </Dropdown.Item>
