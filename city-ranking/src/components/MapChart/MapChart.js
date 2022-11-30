@@ -11,6 +11,8 @@ const MapChart = (props) => {
         { key: "health", name: "Health Care" },
         { key: "criminal", name: "Criminal Rate" },
         { key: "pollution", name: "Pollution" },
+        { key: "purchasePower", name: "Purchase Power" },
+        { key: "qualityLife", name: "Quality of Life" },
     ];
 
     const [data, setData] = useState(props.data);
@@ -68,8 +70,8 @@ const MapChart = (props) => {
         // Data and color scale
         const records = {};
         const colorScale = d3.scaleThreshold()
-        .domain([18, 35, 52, 68, 86, 100])
-        .range(d3.schemeBlues[6]);
+        .domain([20, 40, 60, 80, 100])
+        .range(d3.schemeBlues[5]);
 
         // Load external data and boot
         data.forEach(value => {
@@ -97,6 +99,22 @@ const MapChart = (props) => {
                     }
                     else
                         records[value.country] = parseInt(value.crimeRating)
+                    break;
+                case "Purchase Power":
+                    if(value.country in records){
+                        var i = records[value.country]
+                        records[value.country] = (i+parseInt(value.purchasePower))/2;
+                    }
+                    else
+                        records[value.country] = parseInt(value.purchasePower)
+                    break;
+                case "Quality of Life":
+                    if(value.country in records){
+                        var i = records[value.country]
+                        records[value.country] = (i+parseInt(value.qualityLife))/2;
+                    }
+                    else
+                        records[value.country] = parseInt(value.qualityLife)
                     break;
                 default:
                     records[value.country] = parseInt(value.healthCare)
