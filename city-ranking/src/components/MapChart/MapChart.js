@@ -44,6 +44,7 @@ const MapChart = (props) => {
         // }, [])
 
         // Draw chart using the data and updated dimensions
+        d3.select("#mapchart").selectAll('svg').remove();
         SetupChart();
 
     }, [dimensions, dropValue])
@@ -52,11 +53,12 @@ const MapChart = (props) => {
 
         const chartwidth = parseInt(d3.select('#mapchart').style('width'));
         const chartheight = parseInt(d3.select('#mapchart').style('height'));
-
-        // The svg
-        const svg = d3.select(d3MapChart.current)
-            .attr("width", chartwidth)
-            .attr("height", chartheight);
+        
+        // The SVG
+        const svg = d3.select("#mapchart").append('svg')
+        .attr("ref", d3MapChart.current)
+        .attr("width", chartwidth)
+        .attr("height", chartheight);
 
         let centered;
 
@@ -73,9 +75,12 @@ const MapChart = (props) => {
         .domain([20, 40, 60, 80, 100])
         .range(d3.schemeBlues[5]);
 
-        const tooltip = d3.select("div.map-chart-item").append("div")
-        .attr("class", "tooltip")
+        d3.select("div.tooltip").selectAll("ul").remove();
+        d3.select("div.tooltip").selectAll("li").remove();
+
+        const tooltip = d3.select("div.tooltip")
         .style("opacity", 0);
+
 
         // Load external data and boot
         data.forEach(value => {
@@ -157,7 +162,7 @@ const MapChart = (props) => {
                 .style("opacity", 0.4);
                 d3.select(this)
                 .transition()
-                .duration(200)
+                .duration(0)
                 .style("opacity", 1)
                 .style("stroke", "black");
 
@@ -170,7 +175,7 @@ const MapChart = (props) => {
                 .style("opacity", 1);
                 d3.select(this)
                 .transition()
-                .duration(200)
+                .duration(0)
                 .style("stroke", "transparent");
             }
 
@@ -305,6 +310,8 @@ const MapChart = (props) => {
             <div className="map-chart-item">
                 <div className='map-chart' id='mapchart'>
                     <svg ref={d3MapChart}></svg>
+                </div>
+                <div className='tooltip'>
                 </div>
             </div>
         </div>
