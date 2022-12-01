@@ -10,6 +10,8 @@ import {
     axisBottom,
     axisLeft,
     zoom,
+    scaleOrdinal,
+    scalePoint,
 } from "d3";
 import useResizeObserver from "./useResizeObserver";
 
@@ -17,11 +19,11 @@ import useResizeObserver from "./useResizeObserver";
  * Component that renders a ZoomableLineChart
  */
 
-function ZoomableLineChart({ data, id = "myZoomableLineChart" }) {
+function ZoomableLineChart({ data }) {
     const svgRef = useRef();
     const wrapperRef = useRef();
     const dimensions = useResizeObserver(wrapperRef);
-    const [currentZoomState, setCurrentZoomState] = useState();
+    var allGroup = ["valueA", "valueB", "valueC"]
 
     const menuItems = [
         { key: "health", name: "Health Care" },
@@ -29,30 +31,35 @@ function ZoomableLineChart({ data, id = "myZoomableLineChart" }) {
         { key: "pollution", name: "Pollution" },
     ];
 
+    var ids = []
+    var items = []
+    var values = []
+    data.forEach((el) => {
+        items.push(el.key)
+        values.push(el.value)
+        ids.push(el.id)
+    })
+
     // will be called initially and on every data change
     useEffect(() => {
         const svg = select(svgRef.current);
         const svgContent = svg.select(".content");
         const { width, height } =
             dimensions || wrapperRef.current.getBoundingClientRect();
+        //console.log("height: ", height)
 
         // scales + line generator
-        const xScale = scaleLinear()
-            .domain([0, data.length - 1])
-            .range([10, width - 10]);
-
-        if (currentZoomState) {
-            const newXScale = currentZoomState.rescaleX(xScale);
-            xScale.domain(newXScale.domain());
-        }
+        var xScale = scalePoint()
+            .range([0, width])
+            .domain(items);
 
         const yScale = scaleLinear()
-            .domain([0, max(data)])
+            .domain([0, max(values)+1])
             .range([height - 10, 10]);
 
         const lineGenerator = line()
-            .x((d, index) => xScale(index))
-            .y((d) => yScale(d))
+            .x(function (d) { return xScale(d.key) })
+            .y(function (d) { return yScale(d.value) })
             .curve(curveCardinal);
 
         // render the line
@@ -71,11 +78,10 @@ function ZoomableLineChart({ data, id = "myZoomableLineChart" }) {
             .data(data)
             .join("circle")
             .attr("class", "myDot")
-            .attr("stroke", "black")
-            .attr("r", 4)
-            .attr("fill", "lightblue")
-            .attr("cx", (value, index) => xScale(index))
-            .attr("cy", yScale);
+            .attr("r", 5)
+            .attr("fill", "#ccc")
+            .attr("cx", function (d) { return xScale(d.key) })
+            .attr("cy", function (d) { return yScale(d.value) })
 
         // axes
         const xAxis = axisBottom(xScale);
@@ -86,21 +92,7 @@ function ZoomableLineChart({ data, id = "myZoomableLineChart" }) {
 
         const yAxis = axisLeft(yScale);
         svg.select(".y-axis").call(yAxis);
-
-        // zoom
-        const zoomBehavior = zoom()
-            .scaleExtent([0.5, 5])
-            .translateExtent([
-                [0, 0],
-                [width, height],
-            ])
-            .on("zoom", (event) => {
-                const zoomState = event.transform;
-                setCurrentZoomState(zoomState);
-            });
-
-        svg.call(zoomBehavior);
-    }, [currentZoomState, data, dimensions]);
+    }, [data, dimensions]);
 
     return (
         <div className="line-chart animate__animated animate__fadeInDown">
@@ -121,14 +113,14 @@ function ZoomableLineChart({ data, id = "myZoomableLineChart" }) {
                 </Dropdown>
             </div>
             <div className="line-chart-item">
-                <div ref={wrapperRef} style={{ marginBottom: "2rem", height:'30rem' }}>
+                <div ref={wrapperRef} style={{ marginBottom: "2rem", height: '30rem' }}>
                     <svg ref={svgRef} className="svg">
                         <defs>
-                            <clipPath id={id}>
+                            <clipPath>
                                 <rect x="0" y="0" width="100%" height="100%" />
                             </clipPath>
                         </defs>
-                        <g className="content" clipPath={`url(#${id})`}></g>
+                        <g className="content"></g>
                         <g className="x-axis" />
                         <g className="y-axis" />
                     </svg>
