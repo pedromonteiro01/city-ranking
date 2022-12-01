@@ -14,21 +14,19 @@ function App() {
   const [records, setRecords] = useState(null);
 
   useEffect(()=>{
-    if (records === null) {
-      Papa.parse(city_quality_csv, {
-        download: true,
-        complete: function (input) {
-            const inpt = input.data
-            let values = [];
-            for (let i = 0; i<inpt.length; i++){
-              if (i !== 0) {
-                values.push({city: input.data[i][0], rating: input.data[i][1], purchasePower: input.data[i][2], healthCare: input.data[i][3], pollution: input.data[i][4], qualityLife: input.data[i][5], crimeRating: input.data[i][6]});
-              }
+    Papa.parse(city_quality_csv, {
+      download: true,
+      complete: function (input) {
+          const inpt = input.data
+          let values = [];
+          for (let i = 0; i<inpt.length; i++){
+            if (i !== 0) {
+              values.push({city: input.data[i][0], rating: input.data[i][1], purchasePower: input.data[i][2], healthCare: input.data[i][3], pollution: input.data[i][4], qualityLife: input.data[i][5], crimeRating: input.data[i][6]});
             }
-            setRecords(values);
-        }
-      });
-    }
+          }
+          setRecords(values);
+      }
+    });
   },[])
 
   const receivedData = (data) => {
@@ -36,10 +34,40 @@ function App() {
   };
 
   const [data, setData] = useState(
-    Array.from({ length: 50 }, () => Math.round(Math.random() * 100))
+    [
+      {
+        "id": 1,
+        "key": "Coffee",
+        "value": 2
+      },
+      {
+        "id": 2,
+        "key": "Sugar",
+        "value": 4
+      },
+      {
+        "id": 3,
+        "key": "Water",
+        "value": 8
+      },
+      {
+        "id": 4,
+        "key": "Oil",
+        "value": 10
+      },
+      {
+        "id": 5,
+        "key": "Gas",
+        "value": 14
+      },
+      {
+        "id": 6,
+        "key": "Coke",
+        "value": 20
+      }
+    ]
   );
 
-  console.log(data)
   return (
     <div className="app">
       <div className='side-bar-wrapper'>
