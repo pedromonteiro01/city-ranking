@@ -77,7 +77,6 @@ function App() {
       for (let index in records) {
         result.push({city: records[index].city, country: temp[records[index].city], rating: records[index].rating, purchasePower: records[index].purchasePower, healthCare: records[index].healthCare, pollution: records[index].pollution, qualityLife: records[index].qualityLife, crimeRating: records[index].crimeRating})
       }
-      console.log(result);
       setCountries(result);
     }
   }, [cities])
