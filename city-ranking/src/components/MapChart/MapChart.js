@@ -4,6 +4,7 @@ import { Dropdown } from "@nextui-org/react";
 import * as d3 from 'd3';
 import * as d3geoProjection from 'd3-geo-projection';
 import * as d3geo from "d3-geo";
+import { legendColor } from 'd3-svg-legend';
 
 const MapChart = (props) => {
 
@@ -80,6 +81,25 @@ const MapChart = (props) => {
 
         const tooltip = d3.select("div.tooltip")
         .style("opacity", 0);
+
+        //Legend
+        var g = svg.append("g")
+            .attr("class", "legendThreshold")
+            .attr("transform", "translate(0,50)");
+
+        g.append("text")
+            .attr("class", "caption")
+            .attr("x", 0)
+            .attr("y", -6)
+            .style("font-size","16px")
+            .text(dropValue);
+        var labels = ['0-20', '20-40', '40-60', '60-80', '80-100'];
+        var legend = legendColor()
+            .labels(function (d) { return labels[d.i]; })
+            .shapePadding(0)
+            .scale(colorScale);
+        svg.select(".legendThreshold")
+            .call(legend);
 
 
         // Load external data and boot
