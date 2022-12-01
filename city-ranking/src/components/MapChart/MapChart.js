@@ -241,7 +241,7 @@ const MapChart = (props) => {
             .enter()
             .append("path")
                 // draw each country
-                .attr("d", d3geo.geoPath()
+                .attr("d", path
                 .projection(projection)
                 )
                 // set the color of each country
@@ -257,6 +257,15 @@ const MapChart = (props) => {
                 .on("mouseover", mouseOver )
                 .on("mouseleave", mouseLeave )
                 .on("click", click)
+
+            var zoom = d3.zoom()
+            .scaleExtent([1, 8])
+            .on('zoom', function(event) {
+                svg.selectAll('path')
+                    .attr('transform', event.transform);
+            });
+        
+            svg.call(zoom);
 
         })
 
