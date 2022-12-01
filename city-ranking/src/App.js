@@ -63,10 +63,50 @@ function App() {
       {
         "id": 6,
         "key": "Coke",
-        "value": 20
+        "value": 6
       }
     ]
   );
+
+  {/*
+[
+      {
+        "city": "Lisbon",
+        "values" : [
+          {
+            "id": 1,
+            "key": "Coffee",
+            "value": 2
+          },
+          {
+            "id": 2,
+            "key": "Sugar",
+            "value": 4
+          },
+          {
+            "id": 3,
+            "key": "Water",
+            "value": 8
+          },
+          {
+            "id": 4,
+            "key": "Oil",
+            "value": 10
+          },
+          {
+            "id": 5,
+            "key": "Gas",
+            "value": 14
+          },
+          {
+            "id": 6,
+            "key": "Coke",
+            "value": 20
+          }
+        ]
+      },
+    ]
+*/}
 
   return (
     <div className="app">

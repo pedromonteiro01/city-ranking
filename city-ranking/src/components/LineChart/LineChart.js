@@ -54,13 +54,13 @@ function ZoomableLineChart({ data }) {
             .domain(items);
 
         const yScale = scaleLinear()
-            .domain([0, max(values)+1])
+            .domain([0, max(values) + 1])
             .range([height - 10, 10]);
 
         const lineGenerator = line()
             .x(function (d) { return xScale(d.key) })
             .y(function (d) { return yScale(d.value) })
-            .curve(curveCardinal);
+            //.curve(curveCardinal);
 
         // render the line
         svgContent
@@ -68,8 +68,8 @@ function ZoomableLineChart({ data }) {
             .data([data])
             .join("path")
             .attr("class", "myLine")
-            .attr("stroke", "#ccc")
-            .attr("stroke-width", "2px")
+            .attr("stroke", "#00C0A3")
+            .attr("stroke-width", 4)
             .attr("fill", "none")
             .attr("d", lineGenerator);
 
@@ -79,9 +79,27 @@ function ZoomableLineChart({ data }) {
             .join("circle")
             .attr("class", "myDot")
             .attr("r", 5)
-            .attr("fill", "#ccc")
+            .attr("fill", "#00C0A3")
             .attr("cx", function (d) { return xScale(d.key) })
             .attr("cy", function (d) { return yScale(d.value) })
+            .attr("stroke", "white")
+            .attr("stroke-width", 1.5)
+
+        svg
+            .selectAll("myLabels")
+            .data(data)
+            .enter()
+            .append('g')
+            .append("text")
+            // use this to append label to last element
+            //.datum(function (d) { return { key: d.key, value: d[d.length - 1] }; }) // keep only the last value of each time series
+            .attr("transform", function (d) { return "translate(" + xScale(d.key) + "," + yScale(d.value) + ")"; }) // Put the text at the position of the last point
+            .attr("x", 15) // shift the text a bit more right
+            .attr("y", 15) // shift the text a bit more right
+            .text("Lisbon")
+            .attr("fill", "#00C0A3")
+            .style("font-size", 15)
+
 
         // axes
         const xAxis = axisBottom(xScale);
