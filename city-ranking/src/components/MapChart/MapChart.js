@@ -73,8 +73,8 @@ const MapChart = (props) => {
         // Data and color scale
         const records = {};
         const colorScale = d3.scaleThreshold()
-        .domain([20, 40, 60, 80, 100])
-        .range(d3.schemeBlues[5]);
+        .domain([1, 20, 40, 60, 80, 100])
+        .range(d3.schemeBlues[6]);
 
         d3.select("div.tooltip").selectAll("ul").remove();
         d3.select("div.tooltip").selectAll("li").remove();
@@ -85,7 +85,7 @@ const MapChart = (props) => {
         //Legend
         var g = svg.append("g")
             .attr("class", "legendThreshold")
-            .attr("transform", "translate(0,50)");
+            .attr("transform", "translate(1170,50)");
 
         g.append("text")
             .attr("class", "caption")
@@ -93,7 +93,7 @@ const MapChart = (props) => {
             .attr("y", -6)
             .style("font-size","16px")
             .text(dropValue);
-        var labels = ['0-20', '20-40', '40-60', '60-80', '80-100'];
+        var labels = ['0', '1-20', '20-40', '40-60', '60-80', '80-100'];
         var legend = legendColor()
             .labels(function (d) { return labels[d.i]; })
             .shapePadding(0)
@@ -204,10 +204,15 @@ const MapChart = (props) => {
                 tooltip.selectAll("li").remove();
                 tooltip.selectAll("ul").remove();
 
+                let str = ""
+
+                if (records[d.id]!==undefined)
+                    str += " - " + Math.round(records[d.id][0] * 100) / 100
+
                 tooltip.append("ul")
                 .attr("class", "list")
                 .style("font-size", "20px")
-                .text(d.properties.name)
+                .text(d.properties.name + str)
 
                 if (records[d.id]!==undefined)
                     for (var key in records[d.id][1]){
