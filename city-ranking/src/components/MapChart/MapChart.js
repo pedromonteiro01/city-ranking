@@ -85,7 +85,7 @@ const MapChart = (props) => {
         //Legend
         var g = svg.append("g")
             .attr("class", "legendThreshold")
-            .attr("transform", "translate(1170,50)");
+            .attr("transform", "translate(0,400)");
 
         g.append("text")
             .attr("class", "caption")
