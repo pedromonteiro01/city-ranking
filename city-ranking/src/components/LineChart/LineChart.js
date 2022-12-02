@@ -17,36 +17,16 @@ const ZoomableLineChart = (props) => {
     const [city2, setCity2] = useState("Porto");
     const [city3, setCity3] = useState("Braga");
 
-    var allGroup = ["valueA", "valueB", "valueC"]
-
     const menuItems = [
         { key: "health", name: "Health Care" },
         { key: "criminal", name: "Criminal Rate" },
         { key: "pollution", name: "Pollution" },
     ];
 
-    var ids = []
-    var items = ["Cappuccino", "Cinema", "Wine", "Gasoline", "Avg Rent", "Avg Income"]
-    console.log(data);
+    var items = ["Cappuccino", "Cinema", "Wine", "Gasoline"]
 
     // will be called initially and on every data change
     useEffect(() => {
-        d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_connectedscatter.csv").then(function(data) {
-
-            // List of groups (here I have one group per column)
-            const allGroup = ["valueA", "valueB", "valueC"]
-
-            // Reformat the data: we need an array of arrays of {x, y} tuples
-            const dataReady = allGroup.map( function(grpName) { // .map allows to do something for each element of the list
-            return {
-                name: grpName,
-                values: data.map(function(d) {
-                return {time: d.time, value: +d[grpName]};
-                })
-            };
-            });
-            console.log(dataReady)
-        })
         SetupChart();
     }, [data, dimensions]);
 
@@ -69,8 +49,6 @@ const ZoomableLineChart = (props) => {
                 }
             }
         })
-        console.log(values)
-        console.log(keys)
 
         // scales + line generator
         var xScale = d3.scalePoint()

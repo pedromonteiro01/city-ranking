@@ -73,7 +73,7 @@ function App() {
             if (i !== 0) {
               let d = {};
               d["city"] = inpt[i][0];
-              d["values"] = [{key: "Cappuccino", value: inpt[i][1]}, {key: "Cinema", value: inpt[i][2]},{key: "Wine", value: inpt[i][3]},{key: "Gasoline", value: inpt[i][4]},{key: "Avg Rent", value: inpt[i][5]},{key: "Avg Income", value: inpt[i][6]},];
+              d["values"] = [{key: "Cappuccino", value: inpt[i][1]}, {key: "Cinema", value: inpt[i][2]},{key: "Wine", value: inpt[i][3]},{key: "Gasoline", value: inpt[i][4]}];
               prods.push(d);
             }
           }
