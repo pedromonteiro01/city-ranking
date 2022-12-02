@@ -1,19 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Dropdown } from "@nextui-org/react";
 import './LineChart.css';
-import {
-    select,
-    scaleLinear,
-    line,
-    max,
-    curveCardinal,
-    axisBottom,
-    axisLeft,
-    zoom,
-    scaleOrdinal,
-    scalePoint,
-    csv
-} from "d3";
+import * as d3 from "d3";
 import useResizeObserver from "./useResizeObserver";
 
 /**
@@ -25,6 +13,9 @@ const ZoomableLineChart = (props) => {
     const wrapperRef = useRef();
     const dimensions = useResizeObserver(wrapperRef);
     const [data, setData] = useState(props.data);
+    const [city1, setCity1] = useState("Lisbon");
+    const [city2, setCity2] = useState("Porto");
+    const [city3, setCity3] = useState("Braga");
 
     var allGroup = ["valueA", "valueB", "valueC"]
 
@@ -35,18 +26,12 @@ const ZoomableLineChart = (props) => {
     ];
 
     var ids = []
-    var items = []
-    var values = []
-    data.forEach((el) => {
-        items.push(el.key)
-        values.push(el.value)
-        ids.push(el.id)
-    })
+    var items = ["Cappuccino", "Cinema", "Wine", "Gasoline", "Avg Rent", "Avg Income"]
     console.log(data);
 
     // will be called initially and on every data change
     useEffect(() => {
-        csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_connectedscatter.csv").then(function(data) {
+        d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_connectedscatter.csv").then(function(data) {
 
             // List of groups (here I have one group per column)
             const allGroup = ["valueA", "valueB", "valueC"]
@@ -66,73 +51,96 @@ const ZoomableLineChart = (props) => {
     }, [data, dimensions]);
 
     const SetupChart = () => {
-        const svg = select(svgRef.current);
+        const svg = d3.select(svgRef.current);
         const svgContent = svg.select(".content");
         const { width, height } =
             dimensions || wrapperRef.current.getBoundingClientRect();
         //console.log("height: ", height)
 
+
+
+        var values = []
+        var keys = []
+        data.forEach((el) => {
+            if (el.city === city1 || el.city === city2 || el.city === city3){
+                keys.push({city: el.city, values: el.values})
+                for (let i in el.values){
+                    values.push(el.values[i].value);
+                }
+            }
+        })
+        console.log(values)
+        console.log(keys)
+
         // scales + line generator
-        var xScale = scalePoint()
+        var xScale = d3.scalePoint()
             .range([0, width])
             .domain(items);
 
-        const yScale = scaleLinear()
-            .domain([0, max(values) + 1])
+        const yScale = d3.scaleLinear()
+            .domain([0, d3.max(values) + 1])
             .range([height - 10, 10]);
 
-        const lineGenerator = line()
+        const lineGenerator = d3.line()
             .x(function (d) { return xScale(d.key) })
             .y(function (d) { return yScale(d.value) })
             //.curve(curveCardinal);
 
+        // A color scale: one color for each group
+        const myColor = d3.scaleOrdinal()
+        .domain(d3.range(3))
+        .range(d3.schemeSet2);
+
         // render the line
         svgContent
             .selectAll(".myLine")
-            .data([data])
+            .data(keys)
             .join("path")
             .attr("class", "myLine")
-            .attr("stroke", "#00C0A3")
+            .attr("stroke", d => myColor(d.city))
             .attr("stroke-width", 4)
             .attr("fill", "none")
-            .attr("d", lineGenerator);
+            .attr("d", d => lineGenerator(d.values));
 
-        svgContent
-            .selectAll(".myDot")
-            .data(data)
+            svg
+            // First we need to enter in a group
+            .selectAll("myDots")
+            .data(keys)
+            .join('g')
+              .style("fill", d => myColor(d.city))
+            // Second we need to enter in the 'values' part of this group
+            .selectAll("myPoints")
+            .data(d => d.values)
             .join("circle")
-            .attr("class", "myDot")
-            .attr("r", 5)
-            .attr("fill", "#00C0A3")
-            .attr("cx", function (d) { return xScale(d.key) })
-            .attr("cy", function (d) { return yScale(d.value) })
-            .attr("stroke", "white")
-            .attr("stroke-width", 1.5)
+              .attr("cx", d => xScale(d.key))
+              .attr("cy", d => yScale(d.value))
+              .attr("r", 5)
+              .attr("stroke", "white")
 
         svg
             .selectAll("myLabels")
-            .data(data)
+            .data(keys)
             .enter()
             .append('g')
             .append("text")
             // use this to append label to last element
-            .datum(function (d) { return { key: data[data.length - 1].key, value: data[data.length - 1].value }; }) // keep only the last value of each time series
-            .attr("transform", function (d) { return "translate(" + xScale(d.key) + "," + yScale(d.value) + ")"; }) // Put the text at the position of the last point
+            .datum(function (d) { return { key: d.city, value: d.values[d.values.length - 1] }; }) // keep only the last value of each time series
+            .attr("transform", function (d) { return "translate(" + xScale(d.value.key) + "," + yScale(d.value.value) + ")"; }) // Put the text at the position of the last point
             .attr("x", 15) // shift the text a bit more right
             .attr("y", 15) // shift the text a bit more right
-            .text("Lisbon")
-            .attr("fill", "#00C0A3")
+            .text(d => d.key)
+            .attr("fill", d => myColor(d.key))
             .style("font-size", 15)
 
 
         // axes
-        const xAxis = axisBottom(xScale);
+        const xAxis = d3.axisBottom(xScale);
         svg
             .select(".x-axis")
             .attr("transform", `translate(0, ${height})`)
             .call(xAxis);
 
-        const yAxis = axisLeft(yScale);
+        const yAxis = d3.axisLeft(yScale);
         svg.select(".y-axis").call(yAxis);
     }
 

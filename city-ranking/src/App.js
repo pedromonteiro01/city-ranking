@@ -4,7 +4,7 @@ import BarChart from './components/BarChart/BarChart';
 import city_quality_csv from './dataset/movehubqualityoflife.csv';
 import cities_csv from './dataset/cities.csv';
 import country_codes_csv from './dataset/country_codes.csv';
-import cost_living_csvs from './dataset/movehubcostofliving.csv';
+import cost_living_csv from './dataset/movehubcostofliving.csv';
 import Papa from "papaparse";
 import { useEffect, useState } from 'react';
 import ZoomableLineChart from './components/LineChart/LineChart';
@@ -18,6 +18,7 @@ function App() {
   const [countries, setCountries] = useState(null);
   const [codes, setCodes] = useState(null);
   const [cities, setCities] = useState(null);
+  const [products, setProducts] = useState(null);
 
   useEffect(()=>{
     if (records === null) {
@@ -60,6 +61,23 @@ function App() {
             }
           }
           setCities(cities);
+        }
+      });
+
+      Papa.parse(cost_living_csv, {
+        download: true,
+        complete: function (input) {
+          const inpt = input.data
+          let prods = [];
+          for (let i = 0; i<inpt.length; i++){
+            if (i !== 0) {
+              let d = {};
+              d["city"] = inpt[i][0];
+              d["values"] = [{key: "Cappuccino", value: inpt[i][1]}, {key: "Cinema", value: inpt[i][2]},{key: "Wine", value: inpt[i][3]},{key: "Gasoline", value: inpt[i][4]},{key: "Avg Rent", value: inpt[i][5]},{key: "Avg Income", value: inpt[i][6]},];
+              prods.push(d);
+            }
+          }
+          setProducts(prods);
         }
       });
 
@@ -120,46 +138,6 @@ function App() {
     ]
   );
 
-  {/*
-[
-      {
-        "city": "Lisbon",
-        "values" : [
-          {
-            "id": 1,
-            "key": "Coffee",
-            "value": 2
-          },
-          {
-            "id": 2,
-            "key": "Sugar",
-            "value": 4
-          },
-          {
-            "id": 3,
-            "key": "Water",
-            "value": 8
-          },
-          {
-            "id": 4,
-            "key": "Oil",
-            "value": 10
-          },
-          {
-            "id": 5,
-            "key": "Gas",
-            "value": 14
-          },
-          {
-            "id": 6,
-            "key": "Coke",
-            "value": 20
-          }
-        ]
-      },
-    ]
-*/}
-
   return (
     <div className="app">
       <div className='side-bar-wrapper'>
@@ -167,7 +145,7 @@ function App() {
       </div>
       <div className='content'>
         {active === "bar" && records!==null && <BarChart data={records}/>}
-        {active === "line" && records!==null && <ZoomableLineChart data={data} />}
+        {active === "line" && records!==null && <ZoomableLineChart data={products} />}
         {active === "radar" && records!==null && <RadarChart />}
         {active === "map" && records!==null && <p><MapChart data={countries}/></p>}
         {active === "pie" && records!==null && <p>Pie</p>}
