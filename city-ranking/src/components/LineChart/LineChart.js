@@ -78,6 +78,7 @@ const ZoomableLineChart = (props) => {
             .attr("stroke", d => myColor(d.city))
             .attr("stroke-width", 4)
             .attr("fill", "none")
+            .attr("class", d => d.city)
             .attr("d", d => lineGenerator(d.values));
 
             svg
@@ -86,6 +87,7 @@ const ZoomableLineChart = (props) => {
             .data(keys)
             .join('g')
               .style("fill", d => myColor(d.city))
+              .attr("class", d => d.city)
             // Second we need to enter in the 'values' part of this group
             .selectAll("myPoints")
             .data(d => d.values)
@@ -101,6 +103,7 @@ const ZoomableLineChart = (props) => {
             .enter()
             .append('g')
             .append("text")
+            .attr("class", d => d.city)
             // use this to append label to last element
             .datum(function (d) { return { key: d.city, value: d.values[d.values.length - 1] }; }) // keep only the last value of each time series
             .attr("transform", function (d) { return "translate(" + xScale(d.value.key) + "," + yScale(d.value.value) + ")"; }) // Put the text at the position of the last point
@@ -109,6 +112,23 @@ const ZoomableLineChart = (props) => {
             .text(d => d.key)
             .attr("fill", d => myColor(d.key))
             .style("font-size", 15)
+
+        svg
+            .selectAll("myLegend")
+            .data(keys)
+            .join('g')
+              .append("text")
+                .attr('x', (d,i) => 30 + i*60)
+                .attr('y', 30)
+                .text(d => d.city)
+                .style("fill", d => myColor(d.city))
+                .style("font-size", 15)
+                .style("cursor", "pointer")
+              .on("click", function(event,d){
+                // is the element currently visible ?
+                let currentOpacity = d3.selectAll("." + d.city).style("opacity")
+                // Change the opacity: from 0 to 1 or from 1 to 0
+                d3.selectAll("." + d.city).transition().style("opacity", currentOpacity == 1 ? 0:1)})
 
 
         // axes
