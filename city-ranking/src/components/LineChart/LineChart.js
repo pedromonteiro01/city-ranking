@@ -12,6 +12,7 @@ import {
     zoom,
     scaleOrdinal,
     scalePoint,
+    csv
 } from "d3";
 import useResizeObserver from "./useResizeObserver";
 
@@ -19,10 +20,12 @@ import useResizeObserver from "./useResizeObserver";
  * Component that renders a ZoomableLineChart
  */
 
-function ZoomableLineChart({ data }) {
+const ZoomableLineChart = (props) => {
     const svgRef = useRef();
     const wrapperRef = useRef();
     const dimensions = useResizeObserver(wrapperRef);
+    const [data, setData] = useState(props.data);
+
     var allGroup = ["valueA", "valueB", "valueC"]
 
     const menuItems = [
@@ -39,9 +42,30 @@ function ZoomableLineChart({ data }) {
         values.push(el.value)
         ids.push(el.id)
     })
+    console.log(data);
 
     // will be called initially and on every data change
     useEffect(() => {
+        csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_connectedscatter.csv").then(function(data) {
+
+            // List of groups (here I have one group per column)
+            const allGroup = ["valueA", "valueB", "valueC"]
+
+            // Reformat the data: we need an array of arrays of {x, y} tuples
+            const dataReady = allGroup.map( function(grpName) { // .map allows to do something for each element of the list
+            return {
+                name: grpName,
+                values: data.map(function(d) {
+                return {time: d.time, value: +d[grpName]};
+                })
+            };
+            });
+            console.log(dataReady)
+        })
+        SetupChart();
+    }, [data, dimensions]);
+
+    const SetupChart = () => {
         const svg = select(svgRef.current);
         const svgContent = svg.select(".content");
         const { width, height } =
@@ -92,7 +116,7 @@ function ZoomableLineChart({ data }) {
             .append('g')
             .append("text")
             // use this to append label to last element
-            //.datum(function (d) { return { key: d.key, value: d[d.length - 1] }; }) // keep only the last value of each time series
+            .datum(function (d) { return { key: data[data.length - 1].key, value: data[data.length - 1].value }; }) // keep only the last value of each time series
             .attr("transform", function (d) { return "translate(" + xScale(d.key) + "," + yScale(d.value) + ")"; }) // Put the text at the position of the last point
             .attr("x", 15) // shift the text a bit more right
             .attr("y", 15) // shift the text a bit more right
@@ -110,7 +134,7 @@ function ZoomableLineChart({ data }) {
 
         const yAxis = axisLeft(yScale);
         svg.select(".y-axis").call(yAxis);
-    }, [data, dimensions]);
+    }
 
     return (
         <div className="line-chart animate__animated animate__fadeInDown">
