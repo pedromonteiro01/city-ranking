@@ -5,7 +5,7 @@
     min-height: 100vh;
     max-height: 100vh;
     height: auto;
-    overflow-y:scroll; 
+    /*overflow-y:scroll; */
     width: 15%;
     height: auto;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
@@ -75,6 +75,28 @@
     display: flex;
     justify-content: center;
     gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.search-button {
+    outline: none;
+    background-color: #fff;
+    border: solid 2px #ccc;
+    border-radius: 6px;
+    width: 70%;
+    margin: 0 15% 2rem 15%;
+    padding: 0.5rem 0.8rem;
+    font-size: 15px;
+}
+
+.icon-search {
+    margin-right: 0.5rem;
+}
+
+.search-button:hover {
+    cursor: pointer;
+    background-color: rgb(238, 219, 219);
+    transition: 0.2s ease-in-out;
 }
 
 ::-webkit-scrollbar{width:6px;border-left:1px solid #E6ECF8;}
