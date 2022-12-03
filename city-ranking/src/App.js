@@ -98,7 +98,7 @@ function App() {
       <div className='content'>
         {active === "bar" && records!==null && <BarChart data={records}/>}
         {active === "line" && records!==null && <ZoomableLineChart data={data} />}
-        {active === "radar" && records!==null && <RadarChart />}
+        {active === "radar" && records!==null && <RadarChart data={records}/>}
         {active === "map" && records!==null && <p><MapChart data={countries}/></p>}
         {active === "pie" && records!==null && <p>Pie</p>}
         {active === "search"  && <SearchCity data={records} />}
