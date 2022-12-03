@@ -8,6 +8,8 @@ import ChartOption from '../ChartOption/ChartOption';
 import { useState } from 'react';
 import question from './question.png';
 import close from './cancel.png';
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import 'animate.css';
 
 const SideBar = (props) => {
@@ -78,6 +80,10 @@ const SideBar = (props) => {
                 setShowSelect("pie");
                 props.myFunc("pie");
                 break;
+            case "search":
+                setShowSelect("search");
+                props.myFunc("search");
+                break;
             default:
                 return;
         }
@@ -89,6 +95,7 @@ const SideBar = (props) => {
                 <img src={logo} alt=''></img>
             </div>
             <div className='side-bar-items'>
+                <button onClick={() => selectChange("search")} className='search-button'><FontAwesomeIcon className="icon-search" icon={faSearch}/>Search City</button>
                 <div className='side-bar-items-bar-selection'>
                     <div className='side-bar-item'>
                         {showStatsByCityLabel &&
@@ -156,9 +163,6 @@ const SideBar = (props) => {
                         </div>
                     </div>
                 </div>
-                <FiltersBox />
-                <Input />
-                <CheckBoxGroup />
             </div>
         </div>
     )

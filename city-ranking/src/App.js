@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import ZoomableLineChart from './components/LineChart/LineChart';
 import RadarChart from './components/RadarChart/RadarChart';
 import MapChart from './components/MapChart/MapChart';
+import SearchCity from './components/SearchCity/SearchCity';
 
 function App() {
 
@@ -37,7 +38,6 @@ function App() {
     Array.from({ length: 50 }, () => Math.round(Math.random() * 100))
   );
 
-  console.log(data)
   return (
     <div className="app">
       <div className='side-bar-wrapper'>
@@ -49,6 +49,7 @@ function App() {
         {active === "radar" && records!==null && <RadarChart />}
         {active === "map" && records!==null && <p><MapChart /></p>}
         {active === "pie" && records!==null && <p>Pie</p>}
+        {active === "search"  && <SearchCity data={records} />}
       </div>
     </div>
   );
