@@ -13,13 +13,43 @@ const RadarChart = (props) => {
     const [data, setData] = useState(props.data);
     const [city1, setCity1] = useState(data[0]);
     const [city2, setCity2] = useState(data[1]);
+    const [cityString1, setCityString1] = useState("");
+    const [results, setResults] = useState(null);
+    const [showAutocomplete, setShowAutocomplete] = useState(false);
+
+    const handleCitySearch1 = (event) => {
+        var city = event.target.value;
+        let arr = [];
+        data.map((el) => {
+            const string = el.city.toLowerCase();
+            const substring = city.toLowerCase();
+            if (string.includes(substring) && city.length > 0 && city !== null) {
+                if (el.city.toLowerCase() === city.toLowerCase() && city != "") {
+                    setShowAutocomplete(false);
+                } else {
+                    setShowAutocomplete(true);
+                    arr.push(<li onClick={() => {
+                        setShowAutocomplete(false);
+                        setCity1(el);
+                    }}>{string}</li>)
+                    setResults(arr);
+                }
+            }
+        })
+    }
 
     return (
         <div className="radar-chart animate__animated animate__fadeInDown">
             <div className='radar-chart-header'>
                 <h3>Cities Comparison</h3>
+                <input autoComplete="off" className='search-input' onChange={handleCitySearch1} value={cityString1} type="search" name="search" placeholder='Search city...' />
+                <ul className='autocomplete-list'>
+                    {
+                        showAutocomplete && results
+                    }
+                </ul>
                 <div className="radar-dropdown-items">
-                <Dropdown>
+                {/* <Dropdown>
                     <Dropdown.Button flat>{city1.city}</Dropdown.Button>
                     <Dropdown.Menu aria-label="Dynamic Actions" items={data} onAction={(key) => {
                         for (let index in data) {
@@ -73,7 +103,7 @@ const RadarChart = (props) => {
                             </Dropdown.Item>
                         )}
                     </Dropdown.Menu>
-                </Dropdown>
+                </Dropdown> */}
                 </div>
             </div>
             <div className="radar-chart-item">
