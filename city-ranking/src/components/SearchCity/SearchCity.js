@@ -70,12 +70,16 @@ const SearchCity = (props) => {
                 setShowGraph(valid2);
             }
             if (string.includes(substring) && city.length > 0 && city !== null) {
-                setShowAutocomplete(true);
-                arr.push(<li onClick={() => {
+                if (el.city.toLowerCase() === city.toLowerCase() && city != "") {
                     setShowAutocomplete(false);
-                    SetCity(string);
-                }}>{string}</li>)
-                setResults(arr)
+                } else {
+                    setShowAutocomplete(true);
+                    arr.push(<li onClick={() => {
+                        setShowAutocomplete(false);
+                        SetCity(string);
+                    }}>{string}</li>)
+                    setResults(arr)
+                }
             }
         })
     }, [city])
