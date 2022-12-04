@@ -89,9 +89,9 @@ const SearchCity = (props) => {
         SetCity(str);
     }
 
-    const margin = { top: 10, right: 30, bottom: 40, left: 100 },
-        width = 460 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+    const margin = { top: 10, right: 30, bottom: 40, left: 110 },
+        width = 800 - margin.left - margin.right,
+        height = 640 - margin.top - margin.bottom;
 
     const drawGraph = () => {
         const svg = d3.select("#my_dataviz")
@@ -101,19 +101,33 @@ const SearchCity = (props) => {
             .append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+        // create tooltip element  
+        const tooltip = d3.select("#my_dataviz")
+        .append("div")
+        .attr("class","d3-tooltip")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .style("padding", "15px")
+        .style("background", "rgba(0,0,0,0.6)")
+        .style("border-radius", "5px")
+        .style("color", "#fff")
+        .text("a simple tooltip");
+
 
         // Parse the Data
 
         // Add X axis
         const x = d3.scaleLinear()
-            .domain([0, 120])
+            .domain([0, 100])
             .range([0, width + margin.right]);
         svg.append("g")
             .attr("transform", `translate(0, ${height})`)
             .call(d3.axisBottom(x).ticks(15))
             .selectAll("text")
-            .attr("transform", "translate(-10,0)rotate(-45)")
-            .style("text-anchor", "end");
+            .attr("transform", "translate(-12,0)rotate(-45)")
+            .style("text-anchor", "end")
+            .style("font-size", "15px");
 
         // Y axis
         const y = d3.scaleBand()
@@ -125,6 +139,7 @@ const SearchCity = (props) => {
             .padding(1);
         svg.append("g")
             .call(d3.axisLeft(y))
+            .style("font-size", "12px");
 
 
         // Lines
@@ -145,9 +160,23 @@ const SearchCity = (props) => {
             .append("circle")
             .attr("cx", function (d) { return x(d.value); })
             .attr("cy", function (d) { return y(d.item); })
-            .attr("r", "5")
-            .style("fill", "#69b3a2")
+            .attr("r", "8")
+            .style("fill", "steelblue")
             .attr("stroke", "none")
+            .on("mouseover", function(d, i) {
+                tooltip.html(`${d.target.__data__.item}: ${d.target.__data__.value}`).style("visibility", "visible");
+                d3.select(this)
+                .attr("fill", "#B2D6FF");
+            })
+            .on("mousemove", function(event){
+                    tooltip
+                    .style("top", (event.pageY-240)+"px")
+                    .style("left",(event.pageX-340)+"px");
+            })
+            .on("mouseout", function() {
+                    tooltip.html(``).style("visibility", "hidden");
+                    d3.select(this).attr("fill", "steelblue");
+            });
     }
 
 
