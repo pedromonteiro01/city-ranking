@@ -89,9 +89,9 @@ const SearchCity = (props) => {
         SetCity(str);
     }
 
-    const margin = { top: 10, right: 30, bottom: 40, left: 110 },
+    const margin = { top: 30, right: 30, bottom: 40, left: 110 },
         width = 800 - margin.left - margin.right,
-        height = 640 - margin.top - margin.bottom;
+        height = 500 - margin.top - margin.bottom;
 
     const drawGraph = () => {
         const svg = d3.select("#my_dataviz")
