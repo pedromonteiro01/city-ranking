@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import ZoomableLineChart from './components/LineChart/LineChart';
 import RadarChart from './components/RadarChart/RadarChart';
 import MapChart from './components/MapChart/MapChart';
+import SearchCity from './components/SearchCity/SearchCity';
 
 function App() {
 
@@ -146,9 +147,10 @@ function App() {
       <div className='content'>
         {active === "bar" && records!==null && <BarChart data={records}/>}
         {active === "line" && records!==null && <ZoomableLineChart data={products} />}
-        {active === "radar" && records!==null && <RadarChart />}
+        {active === "radar" && records!==null && <RadarChart data={records}/>}
         {active === "map" && records!==null && <p><MapChart data={countries}/></p>}
         {active === "pie" && records!==null && <p>Pie</p>}
+        {active === "search"  && <SearchCity data={records} />}
       </div>
     </div>
   );

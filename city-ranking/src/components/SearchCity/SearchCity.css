@@ -1,0 +1,39 @@
+.search-input {
+    width: 50%;
+    margin: 3rem 25% 0 25%;
+    padding: 0.5rem 1rem;
+    border-radius: 22px;
+    outline: none;
+    border: solid 2px #ccc;
+    font-family: 'Poppins';
+}
+
+.search-graph-wrapper {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.loading-chart {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.autocomplete-list {
+    width: 45%;
+    margin: 0% 27.5%;
+}
+
+.autocomplete-list li {
+    border: solid 2px #ccc;
+    border-top: none;
+    list-style: none;
+    padding: 0.5rem 1rem;
+}
+
+.autocomplete-list li:hover {
+    cursor: pointer;
+    background-color: rgb(235, 220, 220);
+}
