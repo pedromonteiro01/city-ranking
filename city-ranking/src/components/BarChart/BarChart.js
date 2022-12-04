@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import 'animate.css';
 import './BarChart.css';
+import { svg, transition } from "d3";
 
 const BarChart = (props) => {
 
@@ -39,6 +40,10 @@ const BarChart = (props) => {
     const [data, setData] = useState(props.data);
     const [loading, setLoading] = useState(true);
     const [dropValue, setDropValue] = useState('Health Care');
+    const [k, setk] = useState(0);
+
+    const zoomThreshold = 1;
+    let lastTransform = d3.zoomIdentity.scale(0.5);
 
     // Ref for resize event update
     const update = useRef(false)
@@ -72,8 +77,11 @@ const BarChart = (props) => {
     const margin = { top: 50, right: 30, bottom: 30, left: 60 }
 
     const LoadChart = () => {
+
         const chartwidth = parseInt(d3.select('#d3demo').style('width')) - margin.left - margin.right
         const chartheight = parseInt(d3.select('#d3demo').style('height')) - margin.top - margin.bottom
+
+        console.log(chartheight, chartwidth);
 
         // const { width, height } =
         //     dimensions || wrapperRef.current.getBoundingClientRect();
@@ -108,7 +116,9 @@ const BarChart = (props) => {
         //     .attr('transform', 'translate(' + margin.left + ',0)')
         //     .call(d3.axisLeft(y))
 
-        const svg = d3.select(d3Chart.current);
+        const svg = d3.select(d3Chart.current)
+        .attr('width', chartheight + margin.top + margin.bottom)
+        .attr('height', chartwidth + margin.left + margin.right);
 
         const svgContent = svg.select(".content");
 
@@ -171,6 +181,8 @@ const BarChart = (props) => {
 
         const { svg, svgContent, x, y, chartheight, chartwidth} = chartConfig.current;
 
+        svg.select(".myXaxis").remove();
+
         // x
         x.domain(values.map(d => d.city));
 
@@ -178,7 +190,7 @@ const BarChart = (props) => {
         y.domain([0, d3.max(values, d => +d["value"])]);
 
         // create tooltip element  
-        const tooltip = d3.select("body")
+        const tooltip = d3.select(".bar-chart-item")
         .append("div")
         .attr("class","d3-tooltip")
         .style("position", "absolute")
@@ -227,15 +239,25 @@ const BarChart = (props) => {
 
         // axes
         const xAxis = d3.axisBottom(x);
-        svg.select(".myXaxis")
+        svg.append("svg")
+            .attr("height", chartheight + margin.top + margin.bottom)
+            .attr("width", chartwidth + margin.right + margin.left)
+            .append("g")
+            .attr("class","myXaxis")
             .attr("transform", `translate(0, ${chartheight})`)
-            .transition().duration(1000)
             .call(xAxis)
-            .selectAll("text")  
+            .selectAll("text")
             .style("text-anchor", "end")
+            .style("font-size", "12px")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
             .attr("transform", "rotate(-45)");
+
+        if (k>3.5){
+            svg.select(".myXaxis").selectAll("text").style("opacity", "1");
+        }
+        else
+            svg.select(".myXaxis").selectAll("text").style("opacity", "0");
 
         const yAxis = d3.axisLeft(y);
         svg.select(".myYaxis").transition().duration(1000).call(yAxis);
@@ -272,9 +294,43 @@ const BarChart = (props) => {
         .extent(extent)
         .translateExtent(extent)
         .on('zoom', (event) => {
+            var t = event.transform;
+            setk(t.k);
             x.range([0, chartwidth].map(d => event.transform.applyX(d)));
             svg.selectAll(".bars rect").attr("x", d => x(d.city)).attr("width", x.bandwidth());
-            svg.select(".myXaxis").call(d3.axisBottom(x));
+            svg.select(".myXaxis").call(xAxis);
+            if (t.k > 3.5){
+                svg.select(".myXaxis").transition().duration(100).selectAll("text").style("opacity", "1");
+                svg.selectAll("rect")
+                .on("mouseover", function(d, i) {
+                        tooltip.html(`Value: ${d.target.__data__.value}`).style("visibility", "visible");
+                        d3.select(this)
+                        .attr("fill", "#B2D6FF");
+                })
+                .on("mousemove", function(event){
+                        tooltip
+                        .style("top", (event.pageY)+"px")
+                        .style("left",(event.pageX-300)+"px");
+                })
+                .on("mouseout", function() {
+                        tooltip.html(``).style("visibility", "hidden");
+                        d3.select(this).attr("fill", "steelblue");
+                });
+            }
+            else{
+                svg.select(".myXaxis").transition().duration(100).selectAll("text").style("opacity", "0");
+                svg.selectAll("rect").attr("fill", "steelblue")
+                .on("mouseover", function(d, i) {
+                    // do nothing
+                })
+                .on("mousemove", function(event){
+                   // do nothing
+                })
+                .on("mouseout", function() {
+                    // do nothing
+                });
+                tooltip.html(``).style("visibility", "hidden");
+            }
         });
 
         svg.call(zoom);
@@ -327,12 +383,11 @@ const BarChart = (props) => {
                     <svg ref={d3Chart} className="svg">
                         <defs>
                             <clipPath id={id}>
-                                <rect x="0" y="0" width="100%" height="100%" />
+                                <rect x="0" y="0" width="100%" height="100%"/>
                             </clipPath>
                         </defs>
                         <g className="content" clipPath={`url(#${id})`}></g>
-                        <g className="myXaxis" />
-                        <g className="myYaxis" />
+                        <g className="myYaxis"></g>
                     </svg>
                 </div>
             </div>
