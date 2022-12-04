@@ -14,6 +14,8 @@ const SearchCity = (props) => {
     const [purchase, setPurchase] = useState(0);
     const [quality, setQuality] = useState(0);
     const [rating, setRating] = useState(0);
+    const [results, setResults] = useState(null);
+    const [showAutocomplete, setShowAutocomplete] = useState(false);
 
     const variables = [
         {
@@ -45,9 +47,11 @@ const SearchCity = (props) => {
     useEffect(() => {
         let crime2, health2, pollution2, purchase2, quality2, rating2 = 0;
         let valid2 = false;
+        let arr = [];
         data.map((el) => {
+            const string = el.city.toLowerCase();
+            const substring = city.toLowerCase();
             if (el.city.toLowerCase() === city.toLowerCase() && city != "") {
-                console.log("el: ", el)
                 crime2 = parseInt(el.crimeRating);
                 health2 = parseInt(el.healthCare);
                 pollution2 = parseInt(el.pollution);
@@ -62,9 +66,20 @@ const SearchCity = (props) => {
                 setQuality(el.qualityLife);
                 setRating(el.rating);
                 setShowGraph(valid2);
-                console.log(showGraph);
             } else {
                 setShowGraph(valid2);
+            }
+            if (string.includes(substring) && city.length > 0 && city !== null) {
+                if (el.city.toLowerCase() === city.toLowerCase() && city != "") {
+                    setShowAutocomplete(false);
+                } else {
+                    setShowAutocomplete(true);
+                    arr.push(<li onClick={() => {
+                        setShowAutocomplete(false);
+                        SetCity(string);
+                    }}>{string}</li>)
+                    setResults(arr)
+                }
             }
         })
     }, [city])
@@ -145,7 +160,12 @@ const SearchCity = (props) => {
 
     return (
         <div className='search-city animate__animated animate__fadeInDown'>
-            <input className='search-input' onChange={handleCitySearch} value={city} type="search" name="search" placeholder='Search city...' />
+            <input autoComplete="off" className='search-input' onChange={handleCitySearch} value={city} type="search" name="search" placeholder='Search city...' />
+            <ul className='autocomplete-list'>
+                {
+                    showAutocomplete && results
+                }
+            </ul>
             {
                 showGraph ?
                     <div className='search-graph-wrapper animate__animated animate__fadeInUp'>
