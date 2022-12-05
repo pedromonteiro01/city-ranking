@@ -30,11 +30,8 @@ const ZoomableLineChart = (props) => {
 
     var items = ["Cappuccino", "Cinema", "Wine", "Gasoline"]
 
-    console.log(data);
-
     // will be called initially and on every data change
     useEffect(() => {
-        console.log("ola");
         LoadChart();
     }, [dimensions]);
 
@@ -50,6 +47,19 @@ const ZoomableLineChart = (props) => {
             dimensions || wrapperRef.current.getBoundingClientRect();
         //console.log("height: ", height)
 
+        // create tooltip element  
+        const tooltip = d3.select(wrapperRef.current)
+            .append("div")
+            .attr("class", "d3-tooltip")
+            .style("position", "absolute")
+            .style("z-index", "10")
+            .style("visibility", "hidden")
+            .style("padding", "15px")
+            .style("background", "rgba(0,0,0,0.6)")
+            .style("border-radius", "5px")
+            .style("color", "#fff")
+            .text("a simple tooltip");
+
         // scales + line generator
         var xScale = d3.scalePoint()
             .range([0, width])
@@ -58,12 +68,12 @@ const ZoomableLineChart = (props) => {
         const yScale = d3.scaleLinear()
             .range([height - 10, 10]);
 
-        configRef.current = { svg, svgContent, xScale, yScale, height, width };
+        configRef.current = { svg, svgContent, xScale, yScale, height, width, tooltip};
         setLoading(false);
     }
 
     const SetupChart = (data, cities) => {
-        const { svg, svgContent, xScale, yScale, height, width } = configRef.current;
+        const { svg, svgContent, xScale, yScale, height, width, tooltip } = configRef.current;
 
         cities.forEach((city) => {
             svg.selectAll("." + city).remove();
@@ -80,13 +90,16 @@ const ZoomableLineChart = (props) => {
                 if (el.city === city) {
                     keys.push({ city: el.city, values: el.values })
                     len.push(j);
-                    for (let i in el.values) {
-                        values.push(el.values[i].value);
+                    for (let i in el.values){
+                        values.push(parseInt(el.values[i].value));
                     }
                     j++;
                 }
             })
         })
+
+        console.log(values);
+        console.log(d3.max(values));
 
         yScale.domain([0, d3.max(values) + 1]);
 
@@ -97,12 +110,9 @@ const ZoomableLineChart = (props) => {
 
         // A color scale: one color for each group
 
-        console.log(d3.schemeSet2);
         keys.forEach((k) => {
             console.log(k.city, d3.schemeSet2[0])
         })
-
-        console.log(len);
 
         // render the line
         svgContent
@@ -131,35 +141,41 @@ const ZoomableLineChart = (props) => {
             .join("circle")
             .attr("cx", d => xScale(d.key))
             .attr("cy", d => yScale(d.value))
-            .attr("r", 5)
+            .attr("r", 7)
             .attr("stroke", "white")
+            .on("mouseover", function (d, i) {
+                console.log(d);
+                tooltip.html(`${d.target.__data__.key}: ${d.target.__data__.value}`).style("visibility", "visible");
+            })
+            .on("mousemove", function (event) {
+                tooltip
+                    .style("top", (event.pageY - 110) + "px")
+                    .style("left", (event.pageX - 400) + "px");
+            })
+            .on("mouseout", function () {
+                tooltip.html(``).style("visibility", "hidden");
+            });
 
-        keys.push({ city: "plus", values: null })
-        len.push(len.length);
+        // keys.push({ city: "plus", values: null })
+        // len.push(len.length);
 
         svg.selectAll("myLegend")
             .data(len)
             .join('g')
-            .append("text")
-            .attr('x', (d, i) => 30 + i * 60)
-            .attr('y', 0)
-            .attr("class", d => keys[d].city + "legend")
-            .text(d => keys[d].city == "plus" ? "+" : keys[d].city)
-            .style("fill", d => keys[d].city == "plus" ? "#000" : d3.schemeSet2[d])
-            .style("font-size", "15px")
-            .style("cursor", "pointer")
-            .on("click", function (event, d) {
-                // is the element currently visible ?
-                if (keys[d].city == "plus") {
-                    changeModal();
-                    //setCities(cities.concat("Paris"));
-                }
-                else {
+              .append("text")
+                .attr('x', (d,i) => {console.log(keys[d].city.length); if (i>0 && keys[i-1].city.length > 10) return 30 + i*60 + 50; else return 30 + i*60;})
+                .attr('y', 0)
+                .attr("class", d => keys[d].city + "legend")
+                .text(d => keys[d].city)
+                .style("fill", d => d3.schemeSet2[d])
+                .style("font-size", "15px")
+                .style("cursor", "pointer")
+              .on("click", function(event,d){
+                    // is the element currently visible ?
                     let currentOpacity = d3.selectAll("." + keys[d].city).style("opacity")
                     // Change the opacity: from 0 to 1 or from 1 to 0
-                    d3.selectAll("." + keys[d].city).transition().style("opacity", currentOpacity == 1 ? 0 : 1)
-                }
-            })
+                    d3.selectAll("." + keys[d].city).transition().style("opacity", currentOpacity == 1 ? 0:1)
+                })
 
         // axes
         const xAxis = d3.axisBottom(xScale);
@@ -178,6 +194,11 @@ const ZoomableLineChart = (props) => {
         setIsDisabled(!isDisabled);
     }
 
+    useEffect(() => {
+        if (!isDisabled)
+            document.getElementById("myInput").focus();
+    }, [isDisabled])
+
     const handleCitySearch = (event) => {
         var str = event.target.value;
         setCity(str);
@@ -187,7 +208,7 @@ const ZoomableLineChart = (props) => {
             var lcCity = d.city.toLowerCase();
             if (lcCity.includes(str)) {
                 setShowAutocomplete(true);
-                result.push(<li key={lcCity} onClick={() => { setShowAutocomplete(false); changeModal(); setCity(""); setCities(cities.concat(d.city)); }}>{lcCity}</li>)
+                result.push(<li key={lcCity} onClick={() => {setCity(""); setCities(cities.concat(d.city)); setShowAutocomplete(false)}}>{lcCity}</li>)
             }
             setResults(result);
         })
@@ -201,7 +222,7 @@ const ZoomableLineChart = (props) => {
                     <h3>Products Price by City</h3>
                 </div>
                 <div className="input-line-wrapper">
-                    <input className="line-input" type="search" onChange={handleCitySearch} value={city} placeholder="Insert City..." disabled={isDisabled} />
+                    <input id="myInput" className="line-input" type="search" onChange={handleCitySearch} value={city} placeholder="Insert City..." onBlur={()=>{if(city.length===0) setShowAutocomplete(false)}}/>
                     <ul className='autocomplete-list'>
                         {
                             showAutocomplete && results
