@@ -33,19 +33,32 @@
     stroke: none;
 }
 
-.autocomplete-list {
-    width: 45%;
-    margin: 0% 27.5%;
+.autocomplete-list-line {
+    width: 3rem;
 }
 
-.autocomplete-list li {
+.autocomplete-list-line li {
     border: solid 2px #ccc;
     border-top: none;
     list-style: none;
     padding: 0.5rem 1rem;
 }
 
-.autocomplete-list li:hover {
+.autocomplete-list-line li:hover {
     cursor: pointer;
-    background-color: rgb(235, 220, 220);
+    background-color: yellow;
+}
+
+.input-line-wrapper {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.line-input {
+    padding: 0.5rem 1rem;
+    outline: none;
+    border: solid 2px #ccc;
 }
