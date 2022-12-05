@@ -5,12 +5,16 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import pedro from './profile.jpeg';
+import cloud from './cloud.png';
 
 const Home = (props) => {
     return (
         <div className='home'>
             <div className='home-header'>
                 CityRanking
+            </div>
+            <div className='home-cloud'>
+                <img src={cloud} />
             </div>
             <div className='button-home-wrapper'>
                 <button className='home-button' onClick={() => setTimeout(props.onClick, 1000)}>Discover</button>

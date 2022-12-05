@@ -38,6 +38,12 @@
     text-align: center;
 }
 
+.home-cloud {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0 2rem 0;
+}
+
 .home-button {
     font-size: 20px;
     background-color: transparent;
