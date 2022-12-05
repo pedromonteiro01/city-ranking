@@ -38,7 +38,7 @@
 }
 
 .autocomplete-list-line li {
-    border: solid 2px #ccc;
+    border: solid 2px #ccc; 
     border-top: none;
     list-style: none;
     padding: 0.5rem 1rem;
@@ -50,7 +50,8 @@
 }
 
 .input-line-wrapper {
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
