@@ -84,6 +84,10 @@ const SideBar = (props) => {
                 setShowSelect("search");
                 props.myFunc("search");
                 break;
+            case "about":
+                setShowSelect("about");
+                props.myFunc("about");
+                break;
             default:
                 return;
         }
@@ -122,7 +126,7 @@ const SideBar = (props) => {
                     <div className='side-bar-item'>
                         {showCitiesComparison &&
                             <div className={`cities-comparison-label animate__animated ${citiesClassName}`}>
-                                Here you can compare two different cities. Also you can compare the quality of live in different continents.
+                                Here you can compare two different cities.
                             </div>
                         }
                         <div className='side-bar-item-wrapper'>
@@ -138,7 +142,6 @@ const SideBar = (props) => {
                         </div>
                         <div className='side-bar-items-bar-selection-elements'>
                             <ChartOption onClick={() => selectChange("radar")} class={showSelect === "radar" ? "chart-option-active" : "chart-option"} image="charts/radar-chart.png" desc="Radar" />
-                            <ChartOption onClick={() => selectChange("pie")} class={showSelect === "pie" ? "chart-option-active" : "chart-option"} image="charts/pie-chart.png" desc="Pie" />
                         </div>
                     </div>
                     <div className='side-bar-item'>
@@ -163,6 +166,7 @@ const SideBar = (props) => {
                         </div>
                     </div>
                 </div>
+                <button onClick={() => selectChange("about")} className='search-button'>About</button>
             </div>
         </div>
     )
