@@ -35,7 +35,6 @@ const ZoomableLineChart = (props) => {
 
     // will be called initially and on every data change
     useEffect(() => {
-        console.log("ola");
         LoadChart();
     }, [dimensions]);
 
@@ -82,12 +81,15 @@ const ZoomableLineChart = (props) => {
                     keys.push({city: el.city, values: el.values})
                     len.push(j);
                     for (let i in el.values){
-                        values.push(el.values[i].value);
+                        values.push(parseInt(el.values[i].value));
                     }
                     j++;
                 }
             })
         })
+
+        console.log(values);
+        console.log(d3.max(values));
 
         yScale.domain([0, d3.max(values) + 1]);
 
@@ -98,12 +100,9 @@ const ZoomableLineChart = (props) => {
 
         // A color scale: one color for each group
 
-        console.log(d3.schemeSet2);
         keys.forEach((k) => {
             console.log(k.city, d3.schemeSet2[0])
         })
-
-        console.log(len);
 
         // render the line
         svgContent
@@ -142,7 +141,7 @@ const ZoomableLineChart = (props) => {
             .data(len)
             .join('g')
               .append("text")
-                .attr('x', (d,i) => 30 + i*60)
+                .attr('x', (d,i) => {console.log(keys[d].city.length); if (i>0 && keys[i-1].city.length > 10) return 30 + i*60 + 50; else return 30 + i*60;})
                 .attr('y', 0)
                 .attr("class", d => keys[d].city + "legend")
                 .text(d => keys[d].city == "plus" ? "+" : keys[d].city)
