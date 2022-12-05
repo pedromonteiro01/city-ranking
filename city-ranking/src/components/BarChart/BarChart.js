@@ -269,7 +269,7 @@ const BarChart = (props) => {
         .attr("text-anchor", "end")
         .style("font-size", "13px")
         .attr("x", chartwidth/2)
-        .attr("y", chartheight + 100)
+        .attr("y", chartheight + 90)
         .style("font-size", "18px")
         .text("Cities");
 
@@ -278,7 +278,7 @@ const BarChart = (props) => {
         .attr("text-anchor", "end")
         .style("font-size", "13px")
         .attr("x", chartwidth/2 + 35)
-        .attr("y", chartheight + 130)
+        .attr("y", chartheight + 110)
         .style("font-size", "15px")
         .style("opacity", "0.7")
         .text("Scroll to zoom...");
