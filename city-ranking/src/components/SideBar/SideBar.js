@@ -14,7 +14,7 @@ import 'animate.css';
 
 const SideBar = (props) => {
 
-    const [showSelect, setShowSelect] = useState("bar");
+    const [showSelect, setShowSelect] = useState("about");
     const [showStatsByCityLabel, setShowStatsByCityLabel] = useState(false);
     const [showProductsByCityLabel, setShowProductsByCityLabel] = useState(false);
     const [showCitiesComparison, setShowCitiesComparison] = useState(false);
