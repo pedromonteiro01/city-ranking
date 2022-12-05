@@ -4,106 +4,69 @@ import Radar from 'react-d3-radar';
 import './RadarChart.css';
 
 const RadarChart = (props) => {
-    const menuItems = [
-        { key: "lisbon", name: "Lisbon" },
-        { key: "madrid", name: "Madrid" },
-        { key: "paris", name: "Paris" },
-    ];
 
     const [data, setData] = useState(props.data);
-    const [city1, setCity1] = useState(data[0]);
-    const [city2, setCity2] = useState(data[1]);
-    const [cityString1, setCityString1] = useState("");
-    const [results, setResults] = useState(null);
-    const [showAutocomplete, setShowAutocomplete] = useState(false);
+    const [city1, setCity1] = useState("");
+    const [city2, setCity2] = useState("");
+    const [showAutocomplete1, setShowAutocomplete1] = useState(false);
+    const [showAutocomplete2, setShowAutocomplete2] = useState(false);
+    const [cities, setCities] = useState([]);
+    const [results1, setResults1] = useState();
+    const [results2, setResults2] = useState();
 
-    const handleCitySearch1 = (event) => {
-        var city = event.target.value;
-        let arr = [];
-        data.map((el) => {
-            const string = el.city.toLowerCase();
-            const substring = city.toLowerCase();
-            if (string.includes(substring) && city.length > 0 && city !== null) {
-                if (el.city.toLowerCase() === city.toLowerCase() && city != "") {
-                    setShowAutocomplete(false);
-                } else {
-                    setShowAutocomplete(true);
-                    arr.push(<li onClick={() => {
-                        setShowAutocomplete(false);
-                        setCity1(el);
-                    }}>{string}</li>)
-                    setResults(arr);
-                }
+    const handleCity1Search = (event) => {
+        var str = event.target.value;
+        setCity1(str);
+        str = str.toLowerCase();
+        var result = [];
+        data.forEach((d) => {
+            var lcCity = d.city.toLowerCase();
+            if (lcCity.includes(str)) {
+                setShowAutocomplete1(true);
+                result.push(<li key={lcCity+"1"} onClick={() => { setShowAutocomplete1(false); setCity1(d); }}>{lcCity}</li>)
             }
+            setResults1(result);
         })
+
+    }
+
+    const handleCity2Search = (event) => {
+        var str = event.target.value;
+        setCity2(str);
+        str = str.toLowerCase();
+        var result = [];
+        data.forEach((d) => {
+            var lcCity = d.city.toLowerCase();
+            if (lcCity.includes(str)) {
+                setShowAutocomplete2(true);
+                result.push(<li key={lcCity+"2"} onClick={() => { setShowAutocomplete2(false); setCity2(d); }}>{lcCity}</li>)
+            }
+            setResults2(result);
+        })
+
     }
 
     return (
         <div className="radar-chart animate__animated animate__fadeInDown">
             <div className='radar-chart-header'>
                 <h3>Cities Comparison</h3>
-                <input autoComplete="off" className='search-input' onChange={handleCitySearch1} value={cityString1} type="search" name="search" placeholder='Search city...' />
-                <ul className='autocomplete-list'>
-                    {
-                        showAutocomplete && results
-                    }
-                </ul>
                 <div className="radar-dropdown-items">
-                {/* <Dropdown>
-                    <Dropdown.Button flat>{city1.city}</Dropdown.Button>
-                    <Dropdown.Menu aria-label="Dynamic Actions" items={data} onAction={(key) => {
-                        for (let index in data) {
-                            if (data[index].city === key){
-                                setCity1(data[index]);
-                                //DrawChart(sample, dimensions);
-                                break;
+                    <div>
+                        <input className="radar-input-1" type="search" placeholder="City..." value={city1.city} onChange={handleCity1Search} />
+                        <ul className="autocomplete1">
+                            {
+                                showAutocomplete1 && results1
                             }
-                        }
-                    }}>
-                        {(item) => (
-                            <Dropdown.Item
-                                key={item.city}
-                                color="default"
-                            >
-                                {item.city}
-                            </Dropdown.Item>
-                        )}
-                    </Dropdown.Menu>
-                </Dropdown>
-                <Dropdown >
-                    <Dropdown.Button flat css={{
-                  borderRadius: '$xs', // radii.xs
-                  border: '$space$1 solid transparent',
-                  background: '#FCC195', // colors.pink800
-                  color: '#EB751D',
-                  textAlign: "center",
-                  padding: 5,
-                  width: "100%",
-                  borderRadius: '12px',
-                  boxShadow: '$md', // shadows.md
-                  '&:hover': {
-                    background: '#FBA76A',
-                  },
-                }}>{city2!==null ? city2.city : "Trigger"}</Dropdown.Button>
-                    <Dropdown.Menu aria-label="Dynamic Actions" items={data} onAction={(key) => {
-                        for (let index in data) {
-                            if (data[index].city === key){
-                                setCity2(data[index]);
-                                //DrawChart(sample, dimensions);
-                                break;
+                        </ul>
+                    </div>
+                    <div>
+                        <input className="radar-input-2" type="search" placeholder="City..." value={city2.city} onChange={handleCity2Search} />
+                        <ul className="autocomplete2">
+                            {
+                                showAutocomplete2 && results2
                             }
-                        }
-                    }}>
-                        {(item) => (
-                            <Dropdown.Item
-                                key={item.city}
-                                color={item.city === "delete" ? "error" : "default"}
-                            >
-                                {item.city}
-                            </Dropdown.Item>
-                        )}
-                    </Dropdown.Menu>
-                </Dropdown> */}
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div className="radar-chart-item">

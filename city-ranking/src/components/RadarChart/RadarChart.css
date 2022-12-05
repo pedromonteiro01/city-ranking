@@ -1,8 +1,8 @@
 .radar-chart-header {
     display: flex;
     justify-content: space-between;
-    width: 80%;
-    margin-right: 20%;
+    width: 90%;
+    margin-right: 10%;
     margin-bottom: 1rem;
 }
 
@@ -22,31 +22,50 @@
     height: 34rem;
     width: 89.5%;
     margin: 0 auto;
+    margin-top: 5rem;
 }
 
-.autocomplete-list {
-    width: 45%;
-    margin: 0% 27.5%;
+.radar-input-1, .radar-input-2 {
+    outline: none;
+    padding: 0.5rem 1rem;
 }
 
-.autocomplete-list li {
-    border: solid 2px #ccc;
+.radar-input-1 {
+    border: solid 2px #7f71ff;
+}
+
+.radar-input-2 {
+    border: solid 2px #FBA76A;
+}
+
+.autocomplete1{
+    width: 3rem;
+}
+
+.autocomplete1 li {
+    border: solid 2px #ccc; 
     border-top: none;
     list-style: none;
     padding: 0.5rem 1rem;
 }
 
-.autocomplete-list li:hover {
+.autocomplete1 li:hover {
     cursor: pointer;
-    background-color: rgb(235, 220, 220);
+    background-color: yellow;
 }
 
-.search-input {
-    width: 50%;
-    margin: 3rem 25% 0 25%;
+.autocomplete2{
+    width: 3rem;
+}
+
+.autocomplete2 li {
+    border: solid 2px #ccc; 
+    border-top: none;
+    list-style: none;
     padding: 0.5rem 1rem;
-    border-radius: 22px;
-    outline: none;
-    border: solid 2px #ccc;
-    font-family: 'Poppins';
+}
+
+.autocomplete2 li:hover {
+    cursor: pointer;
+    background-color: yellow;
 }

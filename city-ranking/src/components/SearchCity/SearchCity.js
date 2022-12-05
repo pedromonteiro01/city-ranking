@@ -2,7 +2,7 @@ import './SearchCity.css';
 import 'font-awesome/css/font-awesome.min.css';
 import { useEffect, useState } from 'react';
 import * as d3 from 'd3';
-import { Audio } from 'react-loader-spinner'
+import { InfinitySpin } from 'react-loader-spinner'
 
 const SearchCity = (props) => {
     const [data, setData] = useState(props.data);
@@ -89,9 +89,9 @@ const SearchCity = (props) => {
         SetCity(str);
     }
 
-    const margin = { top: 10, right: 30, bottom: 40, left: 110 },
+    const margin = { top: 30, right: 30, bottom: 40, left: 110 },
         width = 800 - margin.left - margin.right,
-        height = 640 - margin.top - margin.bottom;
+        height = 500 - margin.top - margin.bottom;
 
     const drawGraph = () => {
         const svg = d3.select("#my_dataviz")
@@ -103,16 +103,16 @@ const SearchCity = (props) => {
 
         // create tooltip element  
         const tooltip = d3.select("#my_dataviz")
-        .append("div")
-        .attr("class","d3-tooltip")
-        .style("position", "absolute")
-        .style("z-index", "10")
-        .style("visibility", "hidden")
-        .style("padding", "15px")
-        .style("background", "rgba(0,0,0,0.6)")
-        .style("border-radius", "5px")
-        .style("color", "#fff")
-        .text("a simple tooltip");
+            .append("div")
+            .attr("class", "d3-tooltip")
+            .style("position", "absolute")
+            .style("z-index", "10")
+            .style("visibility", "hidden")
+            .style("padding", "15px")
+            .style("background", "rgba(0,0,0,0.6)")
+            .style("border-radius", "5px")
+            .style("color", "#fff")
+            .text("a simple tooltip");
 
 
         // Parse the Data
@@ -163,19 +163,19 @@ const SearchCity = (props) => {
             .attr("r", "8")
             .style("fill", "steelblue")
             .attr("stroke", "none")
-            .on("mouseover", function(d, i) {
+            .on("mouseover", function (d, i) {
                 tooltip.html(`${d.target.__data__.item}: ${d.target.__data__.value}`).style("visibility", "visible");
                 d3.select(this)
-                .attr("fill", "#B2D6FF");
+                    .attr("fill", "#B2D6FF");
             })
-            .on("mousemove", function(event){
-                    tooltip
-                    .style("top", (event.pageY-240)+"px")
-                    .style("left",(event.pageX-340)+"px");
+            .on("mousemove", function (event) {
+                tooltip
+                    .style("top", (event.pageY - 240) + "px")
+                    .style("left", (event.pageX - 340) + "px");
             })
-            .on("mouseout", function() {
-                    tooltip.html(``).style("visibility", "hidden");
-                    d3.select(this).attr("fill", "steelblue");
+            .on("mouseout", function () {
+                tooltip.html(``).style("visibility", "hidden");
+                d3.select(this).attr("fill", "steelblue");
             });
     }
 
@@ -203,14 +203,9 @@ const SearchCity = (props) => {
 
                     :
                     <div className='loading-chart'>
-                        <Audio
-                            height="80"
-                            width="80"
-                            radius="9"
-                            color="gray"
-                            ariaLabel="loading"
-                            wrapperStyle
-                            wrapperClass
+                        <InfinitySpin
+                            width='250'
+                            color="#ccc"
                         />
                     </div>
             }
