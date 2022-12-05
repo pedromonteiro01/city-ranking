@@ -9233,6 +9233,10 @@ react-app-polyfill@^3.0.0:
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
 
+react-awesome-modal@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/react-awesome-modal/-/react-awesome-modal-2.0.5.tgz#d19702f7e3bc1f43e734f5a60814c2d1593c693a"
+  integrity sha512-H+0xKBhcGJCoDtMww5K+XUzQtK+oRNpXr1VZoN1tbBgu+fzrLrF+ZkdRC1XiPLJ5gpVd9uR90yg8nyPTtYj/OQ==
 react-d3-cloud@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/react-d3-cloud/-/react-d3-cloud-1.0.6.tgz#61bc086d2d2bd7b3ed080cb68677e97d8f9fc013"
