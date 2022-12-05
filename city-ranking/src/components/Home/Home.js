@@ -10,15 +10,12 @@ import cloud from './cloud.png';
 
 const Home = (props) => {
     return (
-        <div className='home'>
+        <div className='home animate__animated animate__rollIn'>
             <div className='home-header'>
                 CityRanking
             </div>
             <div className='home-cloud'>
                 <img src={cloud} />
-            </div>
-            <div className='button-home-wrapper'>
-                <button className='home-button' onClick={() => setTimeout(props.onClick, 1000)}>Discover</button>
             </div>
             <div className='home-about'>
                 <h3>About</h3>

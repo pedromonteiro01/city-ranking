@@ -15,17 +15,12 @@ import Home from './components/Home/Home';
 
 function App() {
 
-  const [active, setActive] = useState("bar");
+  const [active, setActive] = useState("about");
   const [records, setRecords] = useState(null);
   const [countries, setCountries] = useState(null);
   const [codes, setCodes] = useState(null);
   const [cities, setCities] = useState(null);
   const [products, setProducts] = useState(null);
-  const [showGraphs, setShowGraphs] = useState(false);
-
-  const handleShowGraphs = () => {
-    setShowGraphs(true);
-  }
 
   useEffect(() => {
     if (records === null) {
@@ -110,62 +105,22 @@ function App() {
     setActive(data);
   };
 
-  const [data, setData] = useState(
-    [
-      {
-        "id": 1,
-        "key": "Coffee",
-        "value": 2
-      },
-      {
-        "id": 2,
-        "key": "Sugar",
-        "value": 4
-      },
-      {
-        "id": 3,
-        "key": "Water",
-        "value": 8
-      },
-      {
-        "id": 4,
-        "key": "Oil",
-        "value": 10
-      },
-      {
-        "id": 5,
-        "key": "Gas",
-        "value": 14
-      },
-      {
-        "id": 6,
-        "key": "Coke",
-        "value": 6
-      }
-    ]
-  );
-
-  if (showGraphs) {
-    return (
-      <div className="app">
-        <div className='side-bar-wrapper'>
-          <SideBar myFunc={receivedData} />
-        </div>
-        <div className='content'>
-          {active === "bar" && records !== null && <BarChart data={records} />}
-          {active === "line" && products !== null && <ZoomableLineChart data={products} />}
-          {active === "radar" && records !== null && <RadarChart data={records} />}
-          {active === "map" && countries !== null && <MapChart data={countries} />}
-          {active === "pie" && records !== null && <p>Pie</p>}
-          {active === "search" && <SearchCity data={records} />}
-        </div>
-      </div>)
-  }
-  else {
-    return (
-      <Home onClick={handleShowGraphs} />
-    )
-  }
+  return (
+    <div className="app">
+      <div className='side-bar-wrapper'>
+        <SideBar myFunc={receivedData} />
+      </div>
+      <div className='content'>
+        {active === "bar" && records !== null && <BarChart data={records} />}
+        {active === "line" && products !== null && <ZoomableLineChart data={products} />}
+        {active === "radar" && records !== null && <RadarChart data={records} />}
+        {active === "map" && countries !== null && <MapChart data={countries} />}
+        {active === "pie" && records !== null && <p>Pie</p>}
+        {active === "search" && <SearchCity data={records} />}
+        {active === "about" && <Home />}
+      </div>
+    </div>
+  )
 }
 
 export default App;
