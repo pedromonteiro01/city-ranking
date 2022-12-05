@@ -10,6 +10,13 @@ Different ways of representing the information present in the application:
 - Line Chart
 - Map Chart
 - Radar Chart
+- Lollipop Chart
+
+How to run it:
+```
+cd city-ranking 
+yarn && yarn start
+```
 
  Team:
  - [Pedro Monteiro](https://github.com/pedromonteiro01)
