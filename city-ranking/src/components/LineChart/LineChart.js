@@ -1,8 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Dropdown } from "@nextui-org/react";
 import './LineChart.css';
 import * as d3 from "d3";
-import Modal from 'react-awesome-modal';
 import useResizeObserver from "./useResizeObserver";
 
 /**
@@ -22,6 +20,7 @@ const ZoomableLineChart = (props) => {
     const [loading, setLoading] = useState(true);
     const [showAutocomplete, setShowAutocomplete] = useState(false);
     const [results, setResults] = useState();
+    const [isDisabled, setIsDisabled] = useState(true);
 
     const menuItems = [
         { key: "health", name: "Health Care" },
@@ -38,7 +37,7 @@ const ZoomableLineChart = (props) => {
         LoadChart();
     }, [dimensions]);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (loading || !configRef.current) return;
         SetupChart(data, cities);
     }, [loading, cities])
@@ -58,16 +57,16 @@ const ZoomableLineChart = (props) => {
         const yScale = d3.scaleLinear()
             .range([height - 10, 10]);
 
-        configRef.current = { svg, svgContent, xScale, yScale, height, width};
+        configRef.current = { svg, svgContent, xScale, yScale, height, width };
         setLoading(false);
     }
 
     const SetupChart = (data, cities) => {
-        const { svg, svgContent, xScale, yScale, height, width} = configRef.current;
+        const { svg, svgContent, xScale, yScale, height, width } = configRef.current;
 
         cities.forEach((city) => {
-            svg.selectAll("."+city).remove();
-            svg.selectAll("."+city+"legend").remove();
+            svg.selectAll("." + city).remove();
+            svg.selectAll("." + city + "legend").remove();
             svg.selectAll(".pluslegend").remove();
         })
 
@@ -77,8 +76,8 @@ const ZoomableLineChart = (props) => {
         var j = 0;
         cities.forEach((city) => {
             data.forEach((el) => {
-                if (el.city===city){
-                    keys.push({city: el.city, values: el.values})
+                if (el.city === city) {
+                    keys.push({ city: el.city, values: el.values })
                     len.push(j);
                     for (let i in el.values){
                         values.push(parseInt(el.values[i].value));
@@ -96,7 +95,7 @@ const ZoomableLineChart = (props) => {
         const lineGenerator = d3.line()
             .x(function (d) { return xScale(d.key) })
             .y(function (d) { return yScale(d.value) })
-            //.curve(curveCardinal);
+        //.curve(curveCardinal);
 
         // A color scale: one color for each group
 
@@ -123,18 +122,18 @@ const ZoomableLineChart = (props) => {
             .selectAll("myDots")
             .data(len)
             .join('g')
-              .style("fill", d => d3.schemeSet2[d])
-              .attr("class", d => keys[d].city)
+            .style("fill", d => d3.schemeSet2[d])
+            .attr("class", d => keys[d].city)
             // Second we need to enter in the 'values' part of this group
             .selectAll("myPoints")
             .data(d => keys[d].values)
             .join("circle")
-              .attr("cx", d => xScale(d.key))
-              .attr("cy", d => yScale(d.value))
-              .attr("r", 5)
-              .attr("stroke", "white")
+            .attr("cx", d => xScale(d.key))
+            .attr("cy", d => yScale(d.value))
+            .attr("r", 5)
+            .attr("stroke", "white")
 
-        keys.push({city: "plus", values: null})
+        keys.push({ city: "plus", values: null })
         len.push(len.length);
 
         svg.selectAll("myLegend")
@@ -175,7 +174,7 @@ const ZoomableLineChart = (props) => {
     }
 
     const changeModal = () => {
-        setShowModal(!showModal);
+        setIsDisabled(!isDisabled);
     }
 
     const handleCitySearch = (event) => {
@@ -185,9 +184,9 @@ const ZoomableLineChart = (props) => {
         var result = [];
         data.forEach((d) => {
             var lcCity = d.city.toLowerCase();
-            if (lcCity.includes(str)){
+            if (lcCity.includes(str)) {
                 setShowAutocomplete(true);
-                result.push(<li key={lcCity} onClick={() => {setShowAutocomplete(false); changeModal(); setCity(""); setCities(cities.concat(d.city));}}>{lcCity}</li>)
+                result.push(<li key={lcCity} onClick={() => { setShowAutocomplete(false); changeModal(); setCity(""); setCities(cities.concat(d.city)); }}>{lcCity}</li>)
             }
             setResults(result);
         })
@@ -196,37 +195,20 @@ const ZoomableLineChart = (props) => {
 
     return (
         <>
-            <Modal visible={showModal} width="400" effect="fadeInDown" onClickAway={() => changeModal()}>
-                <div>
-                    <h1>Title</h1>
-                    <p>Some Contents</p>
-                    <input autoComplete="off" className='search-input' onChange={handleCitySearch} value={city} type="search" name="search" placeholder='Search city...' />
+            <div className="line-chart animate__animated animate__fadeInDown">
+                <div className='line-chart-header'>
+                    <h3>Products Price by City</h3>
+                </div>
+                <div className="input-line-wrapper">
+                    <input className="line-input" type="search" onChange={handleCitySearch} value={city} placeholder="Insert City..." disabled={isDisabled} />
                     <ul className='autocomplete-list'>
                         {
                             showAutocomplete && results
                         }
                     </ul>
                 </div>
-            </Modal>
-            <div className="line-chart animate__animated animate__fadeInDown">
-                <div className='line-chart-header'>
-                    <h3>Products Price by City</h3>
-                    <Dropdown>
-                        <Dropdown.Button flat>Trigger</Dropdown.Button>
-                        <Dropdown.Menu aria-label="Dynamic Actions" items={menuItems}>
-                            {(item) => (
-                                <Dropdown.Item
-                                    key={item.key}
-                                    color={item.key === "delete" ? "error" : "default"}
-                                >
-                                    {item.name}
-                                </Dropdown.Item>
-                            )}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
                 <div className="line-chart-item">
-                    <div ref={wrapperRef} style={{ marginBottom: "2rem", height: '30rem' }}>
+                    <div ref={wrapperRef} style={{ height: '28rem' }}>
                         <svg ref={svgRef} className="svg">
                             <g className="x-axis"></g>
                             <g className="y-axis"></g>
