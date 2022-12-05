@@ -163,7 +163,7 @@ const ZoomableLineChart = (props) => {
             .data(len)
             .join('g')
               .append("text")
-                .attr('x', (d,i) => {console.log(keys[d].city.length); if (i>0 && keys[i-1].city.length > 10) return 30 + i*60 + 50; else return 30 + i*60;})
+                .attr('x', (d,i) =>50 + i*100 - keys[d].city.length)
                 .attr('y', 0)
                 .attr("class", d => keys[d].city + "legend")
                 .text(d => keys[d].city)
@@ -208,7 +208,7 @@ const ZoomableLineChart = (props) => {
             var lcCity = d.city.toLowerCase();
             if (lcCity.includes(str)) {
                 setShowAutocomplete(true);
-                result.push(<li key={lcCity} onClick={() => {setCity(""); setCities(cities.concat(d.city)); setShowAutocomplete(false)}}>{lcCity}</li>)
+                result.push(<li key={lcCity} onClick={() => {setCity(""); if(cities.length<8) setCities(cities.concat(d.city)); setShowAutocomplete(false)}}>{lcCity}</li>)
             }
             setResults(result);
         })
