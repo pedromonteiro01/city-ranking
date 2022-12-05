@@ -13,6 +13,8 @@
 }
 
 .line-chart-item {
+    position: relative;
+    z-index: 3;
     width: 89.5%;
     margin: 0 auto;
     margin-top: 5rem;
@@ -33,20 +35,24 @@
     stroke: none;
 }
 
-.autocomplete-list {
-    width: 3rem;
+.autocomplete-list-line {
+    position: absolute;
+    width: 15rem;
+    top: 6.2rem;
+    z-index: 10;
 }
 
-.autocomplete-list li {
+.autocomplete-list-line li {
+    background-color: #fff;
     border: solid 2px #ccc; 
     border-top: none;
     list-style: none;
     padding: 0.5rem 1rem;
 }
 
-.autocomplete-list li:hover {
+.autocomplete-list-line li:hover {
     cursor: pointer;
-    background-color: yellow;
+    background-color: #ccc;
 }
 
 .input-line-wrapper {
@@ -59,6 +65,8 @@
 }
 
 .line-input {
+    position: relative;
+    z-index: 3;
     padding: 0.5rem 1rem;
     outline: none;
     border: solid 2px #ccc;

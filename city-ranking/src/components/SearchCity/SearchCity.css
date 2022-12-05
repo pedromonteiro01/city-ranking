@@ -2,7 +2,7 @@
     width: 50%;
     margin: 3rem 25% 0 25%;
     padding: 0.5rem 1rem;
-    border-radius: 22px;
+    border-radius: 6px;
     outline: none;
     border: solid 2px #ccc;
     font-family: 'Poppins';
@@ -35,5 +35,5 @@
 
 .autocomplete-list li:hover {
     cursor: pointer;
-    background-color: rgb(235, 220, 220);
+    background-color: #ccc;
 }

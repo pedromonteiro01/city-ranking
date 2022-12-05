@@ -10,7 +10,7 @@ import cloud from './cloud.png';
 
 const Home = (props) => {
     return (
-        <div className='home animate__animated animate__rollIn'>
+        <div className='home animate__animated animate__fadeInDown'>
             <div className='home-header'>
                 CityRanking
             </div>
