@@ -17,9 +17,6 @@ const Home = (props) => {
             <div className='home-cloud'>
                 <img src={cloud} />
             </div>
-            <div className='button-home-wrapper'>
-                <button className='home-button' onClick={() => setTimeout(props.onClick, 1000)}>Discover</button>
-            </div>
             <div className='home-about'>
                 <h3>About</h3>
                 <p>Project developed within the Data Visualization course. It consists of in the
