@@ -95,7 +95,7 @@
 
 .search-button:hover {
     cursor: pointer;
-    background-color: rgb(238, 219, 219);
+    background-color: #ccc;
     transition: 0.2s ease-in-out;
 }
 

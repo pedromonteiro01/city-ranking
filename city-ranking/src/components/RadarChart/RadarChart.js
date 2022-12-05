@@ -6,8 +6,10 @@ import './RadarChart.css';
 const RadarChart = (props) => {
 
     const [data, setData] = useState(props.data);
-    const [city1, setCity1] = useState("");
-    const [city2, setCity2] = useState("");
+    const [city1, setCity1] = useState(props.data[0]);
+    const [city2, setCity2] = useState(props.data[1]);
+    const [city1string, setCity1string] = useState(city1.city);
+    const [city2string, setCity2string] = useState(city2.city);
     const [showAutocomplete1, setShowAutocomplete1] = useState(false);
     const [showAutocomplete2, setShowAutocomplete2] = useState(false);
     const [cities, setCities] = useState([]);
@@ -16,34 +18,40 @@ const RadarChart = (props) => {
 
     const handleCity1Search = (event) => {
         var str = event.target.value;
-        setCity1(str);
-        str = str.toLowerCase();
-        var result = [];
-        data.forEach((d) => {
-            var lcCity = d.city.toLowerCase();
-            if (lcCity.includes(str)) {
-                setShowAutocomplete1(true);
-                result.push(<li key={lcCity} onClick={() => { setShowAutocomplete1(false); setCities(cities.concat(d.city)); }}>{lcCity}</li>)
-            }
-            setResults1(result);
-        })
-
+        setCity1string(str);
+        if (str.length===0)
+            setShowAutocomplete1(false);
+        else{
+            str = str.toLowerCase();
+            var result = [];
+            data.forEach((d) => {
+                var lcCity = d.city.toLowerCase();
+                if (lcCity.includes(str)) {
+                    setShowAutocomplete1(true);
+                    result.push(<li key={lcCity+"1"} onClick={() => {setCity1(d); setCity1string(d.city); setShowAutocomplete1(false);}}>{lcCity}</li>)
+                }
+                setResults1(result);
+            })
+        }
     }
 
     const handleCity2Search = (event) => {
         var str = event.target.value;
-        setCity2(str);
-        str = str.toLowerCase();
-        var result = [];
-        data.forEach((d) => {
-            var lcCity = d.city.toLowerCase();
-            if (lcCity.includes(str)) {
-                setShowAutocomplete1(true);
-                result.push(<li key={lcCity} onClick={() => { setShowAutocomplete2(false); setCities(cities.concat(d.city)); }}>{lcCity}</li>)
-            }
-            setResults2(result);
-        })
-
+        setCity2string(str);
+        if (str.length===0)
+            setShowAutocomplete2(false);
+        else{
+            str = str.toLowerCase();
+            var result = [];
+            data.forEach((d) => {
+                var lcCity = d.city.toLowerCase();
+                if (lcCity.includes(str)) {
+                    setShowAutocomplete2(true);
+                    result.push(<li key={lcCity+"2"} onClick={() => {setCity2(d); setCity2string(d.city); setShowAutocomplete2(false);}}>{lcCity}</li>)
+                }
+                setResults2(result);
+            })
+        }
     }
 
     return (
@@ -52,16 +60,16 @@ const RadarChart = (props) => {
                 <h3>Cities Comparison</h3>
                 <div className="radar-dropdown-items">
                     <div>
-                        <input className="radar-input-1" type="search" placeholder="City..." value={city1} onChange={handleCity1Search} />
-                        <ul>
+                        <input className="radar-input-1" placeholder="City..." value={city1string} onChange={handleCity1Search} onBlur={()=>{if(city1string.length===0) setShowAutocomplete1(false)}}/>
+                        <ul className="autocomplete1">
                             {
                                 showAutocomplete1 && results1
                             }
                         </ul>
                     </div>
                     <div>
-                        <input className="radar-input-2" type="search" placeholder="City..." value={city2} onChange={handleCity2Search} />
-                        <ul>
+                        <input className="radar-input-2" placeholder="City..." value={city2string} onChange={handleCity2Search} onBlur={()=>{if(city2string.length===0) setShowAutocomplete2(false)}}/>
+                        <ul className="autocomplete2">
                             {
                                 showAutocomplete2 && results2
                             }
@@ -73,7 +81,7 @@ const RadarChart = (props) => {
                 <Radar
                     width={600}
                     height={600}
-                    padding={70}
+                    padding={60}
                     domainMax={100}
                     highlighted={null}
                     onHover={(point) => {

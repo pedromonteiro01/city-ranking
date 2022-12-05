@@ -95,8 +95,8 @@ const SideBar = (props) => {
 
     return (
         <div className='side-bar'>
-            <div className='logo-wrapper'>
-                <img src={logo} alt=''></img>
+            <div className='home-header'>
+                CityRanking
             </div>
             <div className='side-bar-items'>
                 <button onClick={() => selectChange("search")} className='search-button'><FontAwesomeIcon className="icon-search" icon={faSearch}/>Search City</button>

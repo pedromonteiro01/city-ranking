@@ -52,7 +52,7 @@
 
 .autocomplete-list-line li:hover {
     cursor: pointer;
-    background-color: rgb(235, 220, 220);
+    background-color: #ccc;
 }
 
 .input-line-wrapper {

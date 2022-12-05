@@ -31,9 +31,49 @@
 }
 
 .radar-input-1 {
-    border: solid 2px #7f71ff;
+    border: solid 2px steelblue;
 }
 
 .radar-input-2 {
     border: solid 2px #FBA76A;
+}
+
+.autocomplete1 {
+    position: absolute;
+    width: 10.75rem;
+    top: 2.5rem;
+    z-index: 10;
+}
+
+.autocomplete1 li {
+    background-color: #fff;
+    border: solid 2px #ccc; 
+    border-top: none;
+    list-style: none;
+    padding: 0.5rem 1rem;
+}
+
+.autocomplete1 li:hover {
+    cursor: pointer;
+    background-color: #cee4fd;
+}
+
+.autocomplete2 {
+    position: absolute;
+    width: 10.75rem;
+    top: 2.5rem;
+    z-index: 10;
+}
+
+.autocomplete2 li {
+    background-color: #fff;
+    border: solid 2px #ccc; 
+    border-top: none;
+    list-style: none;
+    padding: 0.5rem 1rem;
+}
+
+.autocomplete2 li:hover {
+    cursor: pointer;
+    background-color: #f3dbca;
 }
