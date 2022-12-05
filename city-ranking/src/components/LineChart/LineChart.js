@@ -37,7 +37,7 @@ const ZoomableLineChart = (props) => {
 
     useEffect(() => {
         if (loading || !configRef.current) return;
-        SetupChart(data, cities);
+        SetupChart();
     }, [loading, cities])
 
     const LoadChart = () => {
@@ -72,7 +72,7 @@ const ZoomableLineChart = (props) => {
         setLoading(false);
     }
 
-    const SetupChart = (data, cities) => {
+    const SetupChart = () => {
         const { svg, svgContent, xScale, yScale, height, width, tooltip } = configRef.current;
 
         cities.forEach((city) => {
@@ -80,6 +80,7 @@ const ZoomableLineChart = (props) => {
             svg.selectAll("." + city + "legend").remove();
             svg.selectAll(".pluslegend").remove();
         })
+        svg.selectAll("yLabel").remove();
 
         var values = [];
         var keys = [];
@@ -187,6 +188,14 @@ const ZoomableLineChart = (props) => {
         const yAxis = d3.axisLeft(yScale);
         svg.select(".y-axis").transition().duration(1000).call(yAxis);
 
+        svg.append("text")
+        .attr("class", "yLabel")
+        .attr("text-anchor", "end")
+        .style("font-size", "13px")
+        .attr("x", -20)
+        .attr("y", 0)
+        .text("GBP");
+
         //d3.selectAll("g").remove();
     }
 
@@ -234,6 +243,7 @@ const ZoomableLineChart = (props) => {
                         <svg ref={svgRef} className="svg">
                             <g className="x-axis"></g>
                             <g className="y-axis"></g>
+                            <text className="yLabel"></text>
                         </svg>
                     </div>
                 </div>
