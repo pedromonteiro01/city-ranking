@@ -60,7 +60,7 @@ const RadarChart = (props) => {
                 <h3>Cities Comparison</h3>
                 <div className="radar-dropdown-items">
                     <div>
-                        <input className="radar-input-1" placeholder="City..." value={city1string} onChange={handleCity1Search} onBlur={()=>{if(city1string.length===0) setShowAutocomplete1(false)}}/>
+                        <input className="radar-input-1" placeholder="City..." autoComplete="off" value={city1string} onChange={handleCity1Search} onBlur={()=>{if(city1string.length===0) setShowAutocomplete1(false)}}/>
                         <ul className="autocomplete1">
                             {
                                 showAutocomplete1 && results1
@@ -68,7 +68,7 @@ const RadarChart = (props) => {
                         </ul>
                     </div>
                     <div>
-                        <input className="radar-input-2" placeholder="City..." value={city2string} onChange={handleCity2Search} onBlur={()=>{if(city2string.length===0) setShowAutocomplete2(false)}}/>
+                        <input className="radar-input-2" placeholder="City..." autoComplete="off" value={city2string} onChange={handleCity2Search} onBlur={()=>{if(city2string.length===0) setShowAutocomplete2(false)}}/>
                         <ul className="autocomplete2">
                             {
                                 showAutocomplete2 && results2

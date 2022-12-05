@@ -149,7 +149,7 @@ const ZoomableLineChart = (props) => {
             })
             .on("mousemove", function (event) {
                 tooltip
-                    .style("top", (event.pageY - 110) + "px")
+                    .style("top", (event.pageY - 200) + "px")
                     .style("left", (event.pageX - 400) + "px");
             })
             .on("mouseout", function () {
@@ -222,7 +222,7 @@ const ZoomableLineChart = (props) => {
                     <h3>Products Price by City</h3>
                 </div>
                 <div className="input-line-wrapper">
-                    <input id="myInput" className="line-input" type="search" onChange={handleCitySearch} value={city} placeholder="Insert City..." onBlur={()=>{if(city.length===0) setShowAutocomplete(false)}}/>
+                    <input id="myInput" className="line-input" autoComplete="off" type="search" onChange={handleCitySearch} value={city} placeholder="Insert City..." onBlur={()=>{if(city.length===0) setShowAutocomplete(false)}}/>
                     <ul className='autocomplete-list-line'>
                         {
                             showAutocomplete && results
