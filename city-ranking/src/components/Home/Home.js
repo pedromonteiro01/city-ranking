@@ -5,6 +5,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import pedro from './profile.jpeg';
+import eduardo from './eduardo.jpeg';
 import cloud from './cloud.png';
 
 const Home = (props) => {
@@ -46,21 +47,24 @@ const Home = (props) => {
                 </div>
                 <div className='authors-wrapper'>
                     <div className='author-image-wrapper'>
-                        <img src={pedro} />
+                        <img src={eduardo} />
                     </div>
                     <div className='author-info'>
                         <p className='author-name'>Eduardo Fernandes</p>
                         <p className='author-email'>eduardofernandes@ua.pt</p>
                     </div>
                     <div className='author-social'>
-                        <a href="https://google.com" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.linkedin.com/in/eduardo-fernandes-5b8490229/" target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon className="social-icon" icon={faLinkedin} />
                         </a>
-                        <a href="https://github.com/pedromonteiro01" target="_blank" rel="noopener noreferrer">
+                        <a href="https://github.com/eduardofernandes11" target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon className="social-icon" icon={faGithub} />
                         </a>
                     </div>
                 </div>
+            </div>
+            <div className='footer'>
+                &copy; CityRanking
             </div>
         </div>
     )
