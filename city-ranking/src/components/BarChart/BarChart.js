@@ -182,6 +182,8 @@ const BarChart = (props) => {
         const { svg, svgContent, x, y, chartheight, chartwidth} = chartConfig.current;
 
         svg.select(".myXaxis").remove();
+        svg.selectAll(".xLabel").remove();
+        svg.selectAll(".xLabelScroll").remove();
 
         // x
         x.domain(values.map(d => d.city));
@@ -262,6 +264,25 @@ const BarChart = (props) => {
         const yAxis = d3.axisLeft(y);
         svg.select(".myYaxis").transition().duration(1000).call(yAxis);
 
+        svg.append("text")
+        .attr("class", "xLabel")
+        .attr("text-anchor", "end")
+        .style("font-size", "13px")
+        .attr("x", chartwidth/2)
+        .attr("y", chartheight + 100)
+        .style("font-size", "18px")
+        .text("Cities");
+
+        svg.append("text")
+        .attr("class", "xLabelScroll")
+        .attr("text-anchor", "end")
+        .style("font-size", "13px")
+        .attr("x", chartwidth/2 + 35)
+        .attr("y", chartheight + 130)
+        .style("font-size", "15px")
+        .style("opacity", "0.7")
+        .text("Scroll to zoom...");
+
         // xAxis.transition().duration(1000).call(d3.axisBottom(x).tickSizeOuter(0))
         // .selectAll("text")  
         // .style("text-anchor", "end")
@@ -301,6 +322,7 @@ const BarChart = (props) => {
             svg.select(".myXaxis").call(xAxis);
             if (t.k > 3.5){
                 svg.select(".myXaxis").transition().duration(100).selectAll("text").style("opacity", "1");
+                svg.select(".xLabelScroll").transition().duration(100).style("opacity", "0");
                 svg.selectAll("rect")
                 .on("mouseover", function(d, i) {
                         tooltip.html(`Value: ${d.target.__data__.value}`).style("visibility", "visible");
@@ -319,6 +341,7 @@ const BarChart = (props) => {
             }
             else{
                 svg.select(".myXaxis").transition().duration(100).selectAll("text").style("opacity", "0");
+                svg.select(".xLabelScroll").transition().duration(100).style("opacity", "0.7");
                 svg.selectAll("rect").attr("fill", "steelblue")
                 .on("mouseover", function(d, i) {
                     // do nothing
@@ -388,6 +411,8 @@ const BarChart = (props) => {
                         </defs>
                         <g className="content" clipPath={`url(#${id})`}></g>
                         <g className="myYaxis"></g>
+                        <text className="xLabel"></text>
+                        <text className="xLabelScroll"></text>
                     </svg>
                 </div>
             </div>

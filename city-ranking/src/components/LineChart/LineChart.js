@@ -80,7 +80,7 @@ const ZoomableLineChart = (props) => {
             svg.selectAll("." + city + "legend").remove();
             svg.selectAll(".pluslegend").remove();
         })
-        svg.selectAll("yLabel").remove();
+        svg.selectAll(".yLabel").remove();
 
         var values = [];
         var keys = [];
