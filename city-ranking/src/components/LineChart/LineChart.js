@@ -223,7 +223,7 @@ const ZoomableLineChart = (props) => {
                 </div>
                 <div className="input-line-wrapper">
                     <input id="myInput" className="line-input" type="search" onChange={handleCitySearch} value={city} placeholder="Insert City..." onBlur={()=>{if(city.length===0) setShowAutocomplete(false)}}/>
-                    <ul className='autocomplete-list'>
+                    <ul className='autocomplete-list-line'>
                         {
                             showAutocomplete && results
                         }
