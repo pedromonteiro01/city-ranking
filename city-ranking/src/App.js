@@ -153,9 +153,9 @@ function App() {
         </div>
         <div className='content'>
           {active === "bar" && records !== null && <BarChart data={records} />}
-          {active === "line" && records !== null && <ZoomableLineChart data={products} />}
+          {active === "line" && products !== null && <ZoomableLineChart data={products} />}
           {active === "radar" && records !== null && <RadarChart data={records} />}
-          {active === "map" && records !== null && <MapChart data={countries} />}
+          {active === "map" && countries !== null && <MapChart data={countries} />}
           {active === "pie" && records !== null && <p>Pie</p>}
           {active === "search" && <SearchCity data={records} />}
         </div>
