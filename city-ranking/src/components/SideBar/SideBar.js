@@ -95,7 +95,13 @@ const SideBar = (props) => {
 
     return (
         <div className='side-bar'>
-            <div className='home-header'>
+            <div style={{
+                fontFamily: 'Indie Flower' ,
+                fontWeight: 900,
+                fontSize: '2.2rem',
+                textAlign: 'center',
+                margin: '3rem 0',
+            }}>
                 CityRanking
             </div>
             <div className='side-bar-items'>

@@ -93,6 +93,14 @@
     margin-right: 0.5rem;
 }
 
+.sider-bar-header {
+    font-family: 'Indie Flower';
+    font-weight: 900;
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 2rem 0;
+}
+
 .search-button:hover {
     cursor: pointer;
     background-color: #ccc;
