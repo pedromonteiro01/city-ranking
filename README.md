@@ -6,7 +6,7 @@ Dataset available on Kaggle: <br>
 https://www.kaggle.com/datasets/blitzr/movehub-city-rankings?select=movehubqualityoflife.csv
 
 Application available at:
-- https://vi-city-ranking.netlify.app/
+https://vi-city-ranking.netlify.app/
 
 Different ways of representing the information present in the application:
 - Bar chart
