@@ -12,6 +12,11 @@ Different ways of representing the information present in the application:
 - Radar Chart
 - Lollipop Chart
 
+Technologies:
+- React
+- D3.js
+- SVG
+
 How to run it:
 ```
 cd city-ranking 
